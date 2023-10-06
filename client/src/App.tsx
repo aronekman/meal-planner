@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { apiClient } from "./common/utils/apiUtils";
+
+const App = () => {
+  const [connection, setConnection] = useState<boolean>(false);
+  useEffect(() => {
+    const ping = async () => {
+      try {
+        const response = await apiClient.get("/ping");
+        response.data === "Pong" && setConnection(true);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    ping();
+  });
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="text-xl font-bold">Meal Planner</h1>
+      {connection && <span className="text-sm font-thin text-green-400">Connected to api</span>}
+    </div>
+  );
+};
 
-export default App
+export default App;
