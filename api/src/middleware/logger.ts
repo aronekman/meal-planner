@@ -1,12 +1,11 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
 const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const timestamp = new Date().toISOString();
-  const { method, url, ip } = req;
+  const { method, url } = req;
   console.log(`
           ${timestamp} 
           ${method} ${url}`);
-  next();
   next();
 };
 
