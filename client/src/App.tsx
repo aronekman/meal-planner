@@ -1,27 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import { apiClient } from "./common/utils/apiUtils";
+import { Button } from './common/components/Button';
+import { useAuthContext } from './features/authentication/AuthContext';
 
-const App = () => {
-  const [connection, setConnection] = useState<boolean>(false);
+const ApplicationWrapper = () => {
+  const { isLoading, isLoggedIn, logout } = useAuthContext();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const ping = async () => {
-      try {
-        const response = await apiClient.get("/ping");
-        response.data === "Pong" && setConnection(true);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    ping();
-  });
+    console.log(isLoading, isLoggedIn);
+    if (!isLoading && !isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoading, isLoggedIn, navigate]);
 
+  const handleLogOut = () => {
+    logout();
+    navigate('/login');
+  };
+
+  if (isLoading) return null;
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-xl font-bold">Meal Planner</h1>
-      {connection && <span className="text-sm font-thin text-green-400">Connected to api</span>}
+    <div>
+      <div className="flex justify-end">
+        <Button onClick={handleLogOut}>Log Out</Button>
+      </div>
+      <h1>Logged In</h1>
+      <Outlet />
     </div>
   );
 };
 
-export default App;
+export default ApplicationWrapper;

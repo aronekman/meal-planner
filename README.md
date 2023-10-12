@@ -27,13 +27,14 @@ Express + React + MongoDB meal planning app
    docker compose up -d
    ```
 2. Open `http://localhost:8081` and create a database by giving it a name (e.g. `meal-planner`)
-3. Start server
+3. Copy `.env.template` to `.env` and fill out the values
+4. Start server
    ```
    cd ./api
    npm install
    npm run dev
    ```
-4. Start client
+5. Start client
    ```
    cd ../client
    npm install
