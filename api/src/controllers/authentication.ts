@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 import UserToken from '../models/UserToken';
-import { generateTokens, verifyRefreshToken } from '../utils/authentication';
+import { generateTokens } from '../utils/authentication';
+import config from '../utils/config';
 
 export const createUser: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
@@ -23,7 +24,6 @@ export const handleLogin: RequestHandler = async (req, res) => {
   if (!username || !password) return res.status(400).send('Username and Password are required');
   const user = await User.findOne({ userName: username });
   if (!user) return res.status(401).send('Invalid username or password');
-  console.log(password, user.passwordHash);
   const passwordCheck = await bcrypt.compare(password, user.passwordHash);
   if (!passwordCheck) return res.status(401).send('Invalid username or password');
   const { accessToken, refreshToken } = await generateTokens(user);
@@ -33,8 +33,10 @@ export const handleLogin: RequestHandler = async (req, res) => {
 export const getNewAccessToken: RequestHandler = async (req, res) => {
   const { refreshToken } = req.body;
   try {
-    const { id } = (await verifyRefreshToken(refreshToken)) as { id: string };
-    const accessToken = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET ?? '', { expiresIn: '5m' });
+    const userToken = await UserToken.findOne({ token: refreshToken });
+    if (!userToken) return res.status(400).send('User not found');
+    const { id } = jwt.verify(refreshToken, config.rtSecret) as { id: string };
+    const accessToken = jwt.sign({ id }, config.atSecret, { expiresIn: config.atLifeTime });
     res.send(accessToken);
   } catch (error) {
     res.status(401).send('Invalid refresh token');

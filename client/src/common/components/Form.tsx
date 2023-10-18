@@ -13,6 +13,7 @@ import { Slot } from '@radix-ui/react-slot';
 
 import { cn } from '../utils/tailwindUtils';
 
+import { Input, InputProps } from './Input';
 import { Label } from './Label';
 
 const Form = FormProvider;
@@ -130,4 +131,9 @@ const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagrap
 );
 FormMessage.displayName = 'FormMessage';
 
-export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, useFormField };
+const FormInput = forwardRef<ElementRef<typeof Input>, InputProps>(({ className, ...props }, ref) => {
+  const { error } = useFormField();
+  return <Input ref={ref} className={cn(error && 'border-destructive', className)} {...props} />;
+});
+
+export { Form, FormControl, FormDescription, FormField, FormInput, FormItem, FormLabel, FormMessage, useFormField };

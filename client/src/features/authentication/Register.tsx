@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
+import apiClient from '@/api/Axios';
 import { Button } from '@/common/components/Button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/common/components/Form';
 import { Input } from '@/common/components/Input';
 import { useToast } from '@/common/components/use-toast';
-import { apiClient } from '@/common/utils/apiUtils';
 
 const FormSchema = z
   .object({
@@ -27,7 +27,7 @@ const Register = () => {
     try {
       await apiClient.post('/register', { username, password });
       toast({ title: 'Registration successfull' });
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       toast({ variant: 'destructive', title: 'Something went wrong' });
     }

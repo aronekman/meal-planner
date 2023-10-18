@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { z } from 'zod';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
-import { Background } from '@/common/components/Background'
-import { GoogleLoginButton } from '@/common/components/GoogleLogin';
+import { Background } from '@/common/components/Background';
 import { Button } from '@/common/components/Button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/common/components/Form';
+import { Form, FormControl, FormField, FormItem } from '@/common/components/Form';
+import { GoogleLoginButton } from '@/common/components/GoogleLogin';
 import { Input } from '@/common/components/Input';
 import { useToast } from '@/common/components/use-toast';
 
@@ -42,26 +42,26 @@ const Login = () => {
   return (
     <div>
       <Background />
-      <div className="
-        absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]
-        w-[80%] max-w-[300px]
-        bg-white
-        border-[1px] rounded-xl border-orange-400 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]
-        flex flex-col items-center px-8"
-      >
-        <h1 className="flex text-3xl font-arbutus my-8">Login</h1>
+      <div
+        className="
+        absolute left-[50%] top-[50%] flex w-[80%]
+        max-w-[300px] translate-x-[-50%]
+        translate-y-[-50%]
+        flex-col items-center rounded-xl border-[1px]
+        border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">
+        <h1 className="my-8 flex font-arbutus text-3xl">Login</h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col">
             <FormField
               control={form.control}
               name="username"
-            render={({ field }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input 
-                      placeholder='Username'
-                      className='bg-stone-100 border-none text-orange-400 
-                        placeholder:text-orange-300 placeholder:italic font-arbutus'
+                    <Input
+                      placeholder="Username"
+                      className="border-none bg-stone-100 font-arbutus 
+                        text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
                   </FormControl>
@@ -74,28 +74,24 @@ const Login = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input 
-                      type="password" 
-                      placeholder='Password'
-                      className='bg-stone-100 border-none text-orange-400 
-                        placeholder:text-orange-300 placeholder:italic font-arbutus mt-3'
-                      {...field} 
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      className="mt-3 border-none bg-stone-100 
+                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button variant="link" className='px-0 font-arbutus text-xs self-end'>
+            <Button variant="link" className="self-end px-0 font-arbutus text-xs">
               Forgot password?
             </Button>
-            <Button className="mt-5 w-full rounded-none
-              bg-orange-400
-              hover:bg-white hover:text-orange-400 hover:border-2 hover:border-orange-400" type="submit">
-              Login
-            </Button>
+            <Button type="submit">Login</Button>
           </form>
         </Form>
-        <hr className='border-[1px] border-black w-full my-3'></hr>
+        <hr className="my-3 w-full border-[1px] border-black"></hr>
         <GoogleOAuthProvider clientId="454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com">
           <GoogleLoginButton />
         </GoogleOAuthProvider>

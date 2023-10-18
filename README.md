@@ -13,12 +13,17 @@ Express + React + MongoDB meal planning app
 
 - React
 
+#### Authentication
+
+- jsonwebtokens
+
 ## Running it locally
 
 ### Requirements:
 
 - node
 - npm
+- Docker
 
 ### steps:
 

@@ -5,28 +5,27 @@ import { Button } from './common/components/Button';
 import { useAuthContext } from './features/authentication/AuthContext';
 
 const ApplicationWrapper = () => {
-  const { isLoading, isLoggedIn, logout } = useAuthContext();
+  const {
+    data: { isLoading, isLoggedIn },
+    logout
+  } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(isLoading, isLoggedIn);
     if (!isLoading && !isLoggedIn) {
       navigate('/login');
     }
   }, [isLoading, isLoggedIn, navigate]);
 
-  const handleLogOut = () => {
-    logout();
-    navigate('/login');
-  };
-
-  if (isLoading) return null;
+  if (isLoading || !isLoggedIn) return null;
   return (
     <div>
-      <div className="flex justify-end">
-        <Button onClick={handleLogOut}>Log Out</Button>
+      <div className="bg flex justify-between bg-primary p-2">
+        <h1 className="my-auto text-lg font-bold text-primary-foreground">Meal Planner</h1>
+        <Button onClick={logout} variant="secondary" size="sm">
+          Log Out
+        </Button>
       </div>
-      <h1>Logged In</h1>
       <Outlet />
     </div>
   );

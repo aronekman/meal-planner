@@ -16,10 +16,10 @@ export default {
         foreground: '#0f172a',
         border: '#e2e8f0',
         input: '#e2e8f0',
-        ring: '#94a3b8',
+        ring: '#f7c7b0',
         primary: {
-          DEFAULT: '#0F172A',
-          foreground: '#f8fafc'
+          DEFAULT: '#FF671F',
+          foreground: '#FFFFFF'
         },
         secondary: {
           DEFAULT: '#f1f5f9',
@@ -65,9 +65,9 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
       },
-      fontFamily: { 
-        'arbutus': ['Arbutus Slab', 'sans-serif'] 
-      } 
+      fontFamily: {
+        arbutus: ['Arbutus Slab', 'sans-serif']
+      }
     }
   },
   plugins: [require('tailwindcss-animate')]
