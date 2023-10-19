@@ -1,11 +1,6 @@
-import mongoose from 'mongoose';
+import { InferSchemaType, model, Schema, Types } from 'mongoose';
 
-export interface IUser extends mongoose.Document {
-  userName: string;
-  passwordHash: string;
-}
-
-const UserSchema = new mongoose.Schema<IUser>({
+const UserSchema = new Schema({
   userName: {
     type: String,
     required: true,
@@ -17,5 +12,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   }
 });
 
-const User = mongoose.model<IUser>('User', UserSchema);
+export type IUser = InferSchemaType<typeof UserSchema> & { _id: Types.ObjectId };
+
+const User = model<IUser>('User', UserSchema);
 export default User;

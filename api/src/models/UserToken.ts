@@ -1,14 +1,8 @@
-import mongoose from 'mongoose';
+import { InferSchemaType, model, Schema, Types } from 'mongoose';
 
-export interface IUserToken extends mongoose.Document {
-  userId: mongoose.Types.ObjectId;
-  token: string;
-  createdAt: Date;
-}
-
-const userTokenSchema = new mongoose.Schema<IUserToken>({
+const userTokenSchema = new Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     required: true
   },
   token: { type: String, required: true },
@@ -19,6 +13,8 @@ const userTokenSchema = new mongoose.Schema<IUserToken>({
   }
 });
 
-const UserToken = mongoose.model<IUserToken>('UserToken', userTokenSchema);
+export type IUserToken = InferSchemaType<typeof userTokenSchema>;
+
+const UserToken = model<IUserToken>('UserToken', userTokenSchema);
 
 export default UserToken;

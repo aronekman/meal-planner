@@ -4,7 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 
-import AuthMiddleware, { IUserRequest } from './middleware/authenticationMiddleware';
+import AuthMiddleware from './middleware/authenticationMiddleware';
 import loggerMiddleware from './middleware/logger';
 import router from './routes';
 import config from './utils/config';
@@ -17,7 +17,7 @@ app.use(loggerMiddleware);
 
 app.use('/api', router);
 
-app.get('/api/ping', AuthMiddleware, (req: IUserRequest, res) => res.send(`Hello ${req.user?.userName}`));
+app.get('/api/ping', AuthMiddleware, (req, res) => res.send(`Hello ${req.user?.userName}`));
 
 const start = async () => {
   try {

@@ -4,11 +4,15 @@ import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 import config from '../utils/config';
 
-export interface IUserRequest extends Request {
-  user?: IUser;
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    export interface Request {
+      user?: IUser;
+    }
+  }
 }
-
-const AuthMiddleware = async (req: IUserRequest, res: Response, next: NextFunction) => {
+const AuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.get('authorization');
   const token = authHeader?.startsWith('Bearer ') && authHeader.split(' ')[1];
   if (!token) return res.sendStatus(401);
