@@ -1,10 +1,11 @@
 import { ReactNode, useEffect } from 'react';
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
+import config from '@/config';
 import { useAuthContext } from '@/features/authentication/AuthContext';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.DEV ? 'http://localhost:8000/api' : '/api'
+  baseURL: `${config.baseUrl}/api`
 });
 
 const AxiosWrapper = ({ children }: { children: ReactNode }) => {
@@ -26,12 +27,12 @@ const AxiosWrapper = ({ children }: { children: ReactNode }) => {
         try {
           const refreshToken = localStorage.getItem('REFRESH_TOKEN');
           if (refreshToken) {
-            const newToken = await apiClient.post(
+            const { data: newToken } = await apiClient.post(
               '/refreshToken',
               { refreshToken },
               { headers: { 'No-Retry': 'true' } }
             );
-            error.config.headers['No-Retry'] = 'true';
+            localStorage.setItem('ACCESS_TOKEN', newToken);
             error.config.headers.Authorization = `Bearer ${newToken}`;
             return axios(error.config);
           } else {

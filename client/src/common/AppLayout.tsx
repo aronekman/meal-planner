@@ -4,15 +4,18 @@ import { AxiosWrapper } from '@/api/Axios';
 import { AuthProvider } from '@/features/authentication/AuthContext';
 
 import Toaster from './components/Toaster';
+import { AppProvider } from './AppContext';
 
 const AppLayout = () => {
   return (
     <AuthProvider>
       <AxiosWrapper>
-        <main>
-          <Outlet />
-        </main>
-        <Toaster />
+        <AppProvider>
+          <main>
+            <Outlet />
+          </main>
+          <Toaster />
+        </AppProvider>
       </AxiosWrapper>
     </AuthProvider>
   );

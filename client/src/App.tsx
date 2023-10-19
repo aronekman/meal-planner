@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
 
+import { useAppContext } from './common/AppContext';
 import { Button } from './common/components/Button';
 import { useAuthContext } from './features/authentication/AuthContext';
 
@@ -9,6 +11,7 @@ const ApplicationWrapper = () => {
     data: { isLoading, isLoggedIn },
     logout
   } = useAuthContext();
+  const { showBackButton } = useAppContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,9 +23,16 @@ const ApplicationWrapper = () => {
   if (isLoading || !isLoggedIn) return null;
   return (
     <div>
-      <div className="bg flex justify-between bg-primary p-2">
-        <h1 className="my-auto text-lg font-bold text-primary-foreground">Meal Planner</h1>
-        <Button onClick={logout} variant="secondary" size="sm">
+      <div className="bg grid grid-cols-3 justify-between bg-primary p-2">
+        {showBackButton && (
+          <Button asChild variant="link" size="sm" className="justify-self-start text-secondary-foreground">
+            <Link to="../">
+              <ChevronLeft /> Back
+            </Link>
+          </Button>
+        )}
+        <h1 className=" col-start-2 my-auto text-center text-lg font-bold text-primary-foreground">Meal Planner</h1>
+        <Button onClick={logout} variant="secondary" size="sm" className="col-start-3 justify-self-end">
           Log Out
         </Button>
       </div>

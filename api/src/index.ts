@@ -4,7 +4,6 @@ import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 
-import AuthMiddleware from './middleware/authenticationMiddleware';
 import loggerMiddleware from './middleware/logger';
 import router from './routes';
 import config from './utils/config';
@@ -17,8 +16,7 @@ app.use(loggerMiddleware);
 
 app.use('/api', router);
 
-app.get('/api/ping', AuthMiddleware, (req, res) => res.send(`Hello ${req.user?.userName}`));
-
+app.use(express.static('uploads'));
 const start = async () => {
   try {
     await mongoose.connect(config.mongoDbUrl, { dbName: config.dbName });

@@ -1,7 +1,8 @@
 import { Router } from 'express';
+import multer from 'multer';
 
 import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication';
-import { createRecipe } from './controllers/recipes';
+import { createRecipe, getRecipes } from './controllers/recipes';
 import AuthMiddleware from './middleware/authenticationMiddleware';
 
 const router = Router();
@@ -11,6 +12,7 @@ router.post('/login', handleLogin);
 router.post('/refreshToken', getNewAccessToken);
 router.delete('/refreshToken', deleteUserToken);
 
-router.post('/recipes', AuthMiddleware, createRecipe);
-
+const recipeUpload = multer({ dest: 'uploads/' });
+router.post('/recipes', AuthMiddleware, recipeUpload.single('image'), createRecipe);
+router.get('/recipes', AuthMiddleware, getRecipes);
 export default router;

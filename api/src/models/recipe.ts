@@ -1,44 +1,8 @@
-import { InferSchemaType, model, Schema } from 'mongoose';
-
-/* const RecipeSchema = z.object({
-  name: z.string().min(5),
-  description: z.string().min(1),
-  time: z.number().int().nullable(),
-  difficulty: z.string(),
-  ingredients: z.array(IngredientSchema),
-  instructions: z.array(z.string()),
-  image: z.instanceof(File).nullable(),
-  cost: z.number().nullable()
-});
-
-export const IngredientSchema = z.object({
-  amount: z.string(),
-  name: z.string(),
-  calories: z.number(),
-  protein_g: z.number()
-}); */
-
-/* export interface IIngredient extends mongoose.Document {
-  amount: string;
-  name: string;
-  calories: string;
-  protein: string;
-} */
-
-/* export interface IRecipe extends mongoose.Document {
-  name: string;
-  description: string;
-  time: number | null;
-  difficulty: string;
-  ingredients: IIngredient[];
-  instructions: string;
-  cost: number | null;
-} */
+import { InferSchemaType, model, Schema, Types } from 'mongoose';
 
 const IngredientSchema = new Schema({
   amount: {
-    type: String,
-    required: true
+    type: String
   },
   name: {
     type: String,
@@ -60,27 +24,32 @@ const RecipeSchema = new Schema({
     required: true
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   time: {
     type: Number
   },
   difficulty: {
-    type: String,
-    required: true
+    type: String
   },
   ingredients: [IngredientSchema],
   instructions: {
-    type: String,
-    required: true
+    type: String
   },
   cost: {
     type: Number
+  },
+  created_by: {
+    type: Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  image: {
+    type: String
   }
 });
 
-type IRecipe = InferSchemaType<typeof RecipeSchema>;
+type IRecipe = InferSchemaType<typeof RecipeSchema> & { _id: Types.ObjectId };
 
 const Recipe = model<IRecipe>('Recipe', RecipeSchema);
 export default Recipe;

@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock3, Gauge, ImagePlus, Trash2 } from 'lucide-react';
 import { z } from 'zod';
 
+import { useAppContext } from '@/common/AppContext';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/common/components/Accordion';
 import { Button } from '@/common/components/Button';
 import { Input } from '@/common/components/Input';
@@ -13,48 +15,80 @@ import { useToast } from '@/common/components/use-toast';
 import { parseDecimal, parseInteger } from '@/common/utils/formUtils';
 
 import { fetchIngredientData, IngredientSchema } from './Ingredient';
+import { RecipeRequest, useRecipeContext } from './RecipeContext';
 
-const RecipeSchema = z.object({
-  name: z.string().min(5),
-  description: z.string().min(1),
+export const RecipeSchema = z.object({
+  name: z.string().min(1, { message: 'Name is required' }),
+  description: z.string(),
   time: z.number().int().nullable(),
   difficulty: z.string(),
-  ingredients: z.array(IngredientSchema),
-  instructions: z.array(z.string()),
+  ingredients: IngredientSchema.array(),
+  instructions: z.string(),
   image: z.instanceof(File).nullable(),
   cost: z.number().nullable()
 });
 
-type Recipe = z.infer<typeof RecipeSchema>;
-
 const CreateRecipes = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { setAppData } = useAppContext();
+  const { createRecipe } = useRecipeContext();
   const [ingredientQuery, setIngredientQuery] = useState<string>('');
   const [ingredientAmount, setIngredientAmount] = useState<string>('');
-  const [data, setData] = useState<Recipe>({
+  const [data, setData] = useState<RecipeRequest>({
     name: '',
     description: '',
     time: null,
     difficulty: '',
     ingredients: [],
-    instructions: [],
+    instructions: '',
     image: null,
     cost: null
   });
-
+  const [imageData, setImageData] = useState<{ name: string; url: string } | null>(null);
   const nutrients = data.ingredients.reduce(
-    (prev, curr) => ({ protein: prev.protein + curr.protein_g, calories: prev.calories + curr.calories }),
+    (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
     {
       protein: 0,
       calories: 0
     }
   );
+  useEffect(() => {
+    setAppData({ showBackButton: true });
+    return () => {
+      setAppData({ showBackButton: false });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!data.image) {
+      setImageData(null);
+    } else {
+      setImageData({ name: data.image.name, url: URL.createObjectURL(data.image) });
+    }
+  }, [data.image]);
 
   const onSubmit = async () => {
-    console.log(RecipeSchema.parse(data));
+    try {
+      const payload = RecipeSchema.parse(data);
+      await createRecipe(payload);
+      toast({ title: 'Recipe created successfully' });
+      navigate('/recipes');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Error',
+          description: error.issues.map(value => value.message).join('\n'),
+          variant: 'destructive'
+        });
+      } else {
+        console.error(error);
+      }
+    }
   };
 
-  const updateData = <K extends keyof Recipe>(key: K, value: Recipe[K]) => {
+  const updateData = <K extends keyof RecipeRequest>(key: K, value: RecipeRequest[K]) => {
     setData(prevState => ({ ...prevState, [key]: value }));
   };
 
@@ -82,18 +116,14 @@ const CreateRecipes = () => {
       />
       <Button variant="secondary" asChild>
         <Label htmlFor="image-upload" className="h-full p-0">
-          {data.image ? (
-            <img
-              className="h-full max-h-40 w-full object-cover object-top "
-              alt={data.image.name}
-              src={URL.createObjectURL(data.image)}
-            />
+          {imageData ? (
+            <img className="h-full max-h-40 w-full object-cover object-top " alt={imageData.name} src={imageData.url} />
           ) : (
             <ImagePlus className="my-10" />
           )}
         </Label>
       </Button>
-      <div className="flex  flex-col gap-2 p-8 pt-4">
+      <div className="flex flex-col gap-2 p-8 pt-4">
         <Input
           placeholder="Recipe Name"
           value={data.name ?? ''}
@@ -197,7 +227,7 @@ const CreateRecipes = () => {
               <Textarea
                 placeholder="Write the instructions here..."
                 value={data.instructions}
-                onChange={({ target }) => updateData('instructions', [...data.instructions, target.value])}
+                onChange={({ target }) => updateData('instructions', target.value)}
               />
             </AccordionContent>
           </AccordionItem>
@@ -232,7 +262,7 @@ const CreateRecipes = () => {
               onChange={({ target }) => updateData('cost', parseDecimal(target.value, 2))}
             />
           </div>
-          <Button onClick={onSubmit} variant="outline">
+          <Button onClick={onSubmit} variant="outline" className="self-end">
             Upload
           </Button>
         </div>

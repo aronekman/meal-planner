@@ -2,20 +2,16 @@ import { createContext, ReactNode, useContext, useEffect, useMemo, useState } fr
 import { useNavigate } from 'react-router-dom';
 
 import apiClient from '@/api/Axios';
+type AuthData = { isLoading: boolean; isLoggedIn: boolean };
 
 type AuthState = {
-  isLoading: boolean;
-  isLoggedIn: boolean;
-};
-
-type AuthContext = {
-  data: AuthState;
+  data: AuthData;
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   refresh: (refreshToken: string) => Promise<string>;
 };
 
-const initialState: AuthContext = {
+const initialState: AuthState = {
   data: {
     isLoading: true,
     isLoggedIn: false
@@ -25,18 +21,22 @@ const initialState: AuthContext = {
   refresh: async () => ''
 };
 
-const AuthContext = createContext<AuthContext>(initialState);
+const AuthContext = createContext<AuthState>(initialState);
 
 const useAuthContext = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [data, setData] = useState<AuthState>({ isLoading: true, isLoggedIn: false });
+  const [data, setData] = useState<AuthData>({ isLoading: true, isLoggedIn: false });
   const navigate = useNavigate();
 
-  const refreshTokenAsync = async (refreshToken: string) => {
+  const refreshTokenAsync = async (refreshToken: string, is_retry?: boolean) => {
     setData({ ...data, isLoading: true });
     try {
-      const response = await apiClient.post('/refreshToken', { refreshToken });
+      const response = await apiClient.post(
+        '/refreshToken',
+        { refreshToken },
+        { headers: is_retry ? { 'No-Retry': 'true' } : {} }
+      );
       localStorage.setItem('ACCESS_TOKEN', response.data);
       setData({ isLoggedIn: true, isLoading: false });
       return response.data;
