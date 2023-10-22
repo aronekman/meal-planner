@@ -46,6 +46,13 @@ const RecipeSchema = new Schema({
   },
   image: {
     type: String
+  },
+  published: {
+    type: Boolean,
+    default: false
+  },
+  published_at: {
+    type : Date
   }
 });
 
