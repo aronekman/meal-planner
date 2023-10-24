@@ -9,6 +9,10 @@ const UserSchema = new Schema({
   passwordHash: {
     type: String,
     required: true
+  },
+  savedRecipes: {
+    type: [String],
+    default : []
   }
 });
 
