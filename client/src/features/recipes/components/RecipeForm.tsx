@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Clock3, Gauge, ImagePlus, Trash2 } from 'lucide-react';
 import { z } from 'zod';
 
@@ -14,8 +14,8 @@ import { Textarea } from '@/common/components/TextArea';
 import { useToast } from '@/common/components/use-toast';
 import { parseDecimal, parseInteger } from '@/common/utils/formUtils';
 
-import { fetchIngredientData, IngredientSchema } from './Ingredient';
-import { RecipeRequest, useRecipeContext } from './RecipeContext';
+import { fetchIngredientData, IngredientSchema } from '../Ingredient';
+import { RecipeRequest, useRecipeContext } from '../RecipeContext';
 
 export const RecipeSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
@@ -168,7 +168,7 @@ const CreateRecipes = () => {
           </div>
         </div>
         <Accordion type="multiple">
-          <AccordionItem value="item-1">
+          <AccordionItem value="ingredients">
             <AccordionTrigger>Ingredients</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-2 p-2">
@@ -221,7 +221,7 @@ const CreateRecipes = () => {
               </div>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
+          <AccordionItem value="instructions">
             <AccordionTrigger>Instructions</AccordionTrigger>
             <AccordionContent className="p-2">
               <Textarea
@@ -231,7 +231,7 @@ const CreateRecipes = () => {
               />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
+          <AccordionItem value="nutrients">
             <AccordionTrigger>Nutrients</AccordionTrigger>
             <AccordionContent className="p-2">
               <div className="flex flex-row flex-wrap justify-evenly gap-2">
@@ -252,7 +252,7 @@ const CreateRecipes = () => {
           </AccordionItem>
         </Accordion>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-2">
           <div>
             <Label htmlFor="cost-input">Cost</Label>
             <Input
@@ -262,8 +262,11 @@ const CreateRecipes = () => {
               onChange={({ target }) => updateData('cost', parseDecimal(target.value, 2))}
             />
           </div>
+          <Button variant="secondary" className="self-end" asChild>
+            <Link to="../">Cancel</Link>
+          </Button>
           <Button onClick={onSubmit} variant="outline" className="self-end">
-            Upload
+            Save
           </Button>
         </div>
       </div>

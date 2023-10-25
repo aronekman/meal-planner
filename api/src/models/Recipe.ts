@@ -52,7 +52,7 @@ const RecipeSchema = new Schema({
     default: false
   },
   published_at: {
-    type : Date
+    type: Date
   }
 });
 

@@ -11,8 +11,8 @@ const UserSchema = new Schema({
     required: true
   },
   savedRecipes: {
-    type: [String],
-    default : []
+    type: [{ type: Types.ObjectId, ref: 'Recipe' }],
+    default: []
   }
 });
 

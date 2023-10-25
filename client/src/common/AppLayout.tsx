@@ -11,9 +11,7 @@ const AppLayout = () => {
     <AuthProvider>
       <AxiosWrapper>
         <AppProvider>
-          <main>
-            <Outlet />
-          </main>
+          <Outlet />
           <Toaster />
         </AppProvider>
       </AxiosWrapper>

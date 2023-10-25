@@ -3,8 +3,10 @@ import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import AppLayout from './common/AppLayout';
 import Login from './features/authentication/Login';
 import Register from './features/authentication/Register';
-import CreateRecipes from './features/recipes/CreateRecipes';
-import MyRecipes from './features/recipes/MyRecipes';
+import RecipeForm from './features/recipes/components/RecipeForm';
+import DraftPage from './features/recipes/pages/DraftPage';
+import MyRecipes from './features/recipes/pages/MyRecipes';
+import PublishedPage from './features/recipes/pages/PublishedPage';
 import { RecipeProvider } from './features/recipes/RecipeContext';
 import ApplicationWrapper from './App';
 
@@ -28,7 +30,9 @@ const router = createBrowserRouter([
             ),
             children: [
               { index: true, element: <MyRecipes /> },
-              { path: 'create', element: <CreateRecipes /> }
+              { path: 'create', element: <RecipeForm /> },
+              { path: ':id/draft', element: <DraftPage /> },
+              { path: ':id/published', element: <PublishedPage /> }
             ]
           }
         ]

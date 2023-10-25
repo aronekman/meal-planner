@@ -3,21 +3,23 @@ import { z } from 'zod';
 
 import apiClient from '@/api/Axios';
 
-import { RecipeSchema } from './CreateRecipes';
+import { RecipeSchema } from './components/RecipeForm';
 
 export type RecipeRequest = z.infer<typeof RecipeSchema>;
 export type Recipe = Omit<z.infer<typeof RecipeSchema>, 'image'> & { _id: string; image?: string };
 
 type RecipeState = {
-  recipes: Recipe[];
-  isLoading: boolean;
+  drafts: Recipe[];
+  published: Recipe[];
+  loaded: boolean;
   getData: () => Promise<void>;
   createRecipe: (recipe: RecipeRequest) => Promise<void>;
 };
 
 const initialState: RecipeState = {
-  recipes: [],
-  isLoading: false,
+  drafts: [],
+  published: [],
+  loaded: false,
   getData: async () => new Promise(resolve => resolve()),
   createRecipe: () => new Promise(resolve => resolve())
 };
@@ -27,14 +29,17 @@ const RecipeContext = createContext<RecipeState>(initialState);
 const useRecipeContext = () => useContext(RecipeContext);
 
 const RecipeProvider = ({ children }: { children: ReactNode }) => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsloading] = useState<boolean>(false);
+  const [drafts, setDrafts] = useState<Recipe[]>([]);
+  const [published, setPublished] = useState<Recipe[]>([]);
+
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const getData = async () => {
-    setIsloading(true);
-    const { data } = await apiClient.get('/recipes');
-    setRecipes(data);
-    setIsloading(false);
+    const draftsResponse = await apiClient.get('/recipes/drafts');
+    const publishedResponse = await apiClient.get('/recipes/published');
+    setDrafts(draftsResponse.data);
+    setPublished(publishedResponse.data);
+    setLoaded(true);
   };
 
   useEffect(() => {
@@ -42,15 +47,16 @@ const RecipeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const createRecipe = async (recipe: RecipeRequest) => {
-    setIsloading(true);
     const { data } = await apiClient.post('/recipes', recipe, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-    setRecipes(prevState => [...prevState, data]);
-    setIsloading(false);
+    setDrafts(prevState => [...prevState, data]);
   };
 
-  const contextValue = useMemo(() => ({ recipes, isLoading, getData, createRecipe }), [recipes, isLoading]);
+  const contextValue = useMemo(
+    () => ({ drafts, published, loaded, getData, createRecipe }),
+    [drafts, published, loaded]
+  );
 
   return <RecipeContext.Provider value={contextValue}>{children}</RecipeContext.Provider>;
 };

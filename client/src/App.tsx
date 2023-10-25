@@ -22,8 +22,8 @@ const ApplicationWrapper = () => {
 
   if (isLoading || !isLoggedIn) return null;
   return (
-    <div>
-      <div className="bg grid grid-cols-3 justify-between bg-primary p-2">
+    <div className="h-screen w-screen">
+      <nav className="sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2">
         {showBackButton && (
           <Button asChild variant="link" size="sm" className="justify-self-start text-secondary-foreground">
             <Link to="../">
@@ -31,12 +31,14 @@ const ApplicationWrapper = () => {
             </Link>
           </Button>
         )}
-        <h1 className=" col-start-2 my-auto text-center text-lg font-bold text-primary-foreground">Meal Planner</h1>
+        <h1 className="col-start-2 my-auto text-center text-lg font-bold text-primary-foreground">Meal Planner</h1>
         <Button onClick={logout} variant="secondary" size="sm" className="col-start-3 justify-self-end">
           Log Out
         </Button>
-      </div>
-      <Outlet />
+      </nav>
+      <main className="h-[calc(100vh-52px)] ">
+        <Outlet />
+      </main>
     </div>
   );
 };
