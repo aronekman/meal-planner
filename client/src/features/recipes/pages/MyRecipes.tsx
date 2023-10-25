@@ -5,13 +5,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/common/components/Button';
 
 import { useRecipeContext } from '../RecipeContext';
-import RecipeIcon from '../RecipeIcon';
+import RecipeIcon from '../components/RecipeIcon';
 
 const MyRecipes = () => {
-  const { drafts, published, getData } = useRecipeContext();
+  const { drafts, published, getData, loaded } = useRecipeContext();
   const navigate = useNavigate();
   useEffect(() => {
-    getData();
+    !loaded && getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -14,6 +14,10 @@ type RecipeState = {
   loaded: boolean;
   getData: () => Promise<void>;
   createRecipe: (recipe: RecipeRequest) => Promise<void>;
+  updateRecipe: (recipe: RecipeRequest, id: string) => Promise<void>;
+  deleteRecipe: (recipe: Recipe) => Promise<void>;
+  publishRecipe: (recipe: Recipe) => Promise<void>;
+  unPublishRecipe: (recipe: Recipe) => Promise<void>;
 };
 
 const initialState: RecipeState = {
@@ -21,7 +25,11 @@ const initialState: RecipeState = {
   published: [],
   loaded: false,
   getData: async () => new Promise(resolve => resolve()),
-  createRecipe: () => new Promise(resolve => resolve())
+  createRecipe: () => new Promise(resolve => resolve()),
+  updateRecipe: () => new Promise(resolve => resolve()),
+  deleteRecipe: () => new Promise(resolve => resolve()),
+  publishRecipe: () => new Promise(resolve => resolve()),
+  unPublishRecipe: () => new Promise(resolve => resolve())
 };
 
 const RecipeContext = createContext<RecipeState>(initialState);
@@ -53,8 +61,41 @@ const RecipeProvider = ({ children }: { children: ReactNode }) => {
     setDrafts(prevState => [...prevState, data]);
   };
 
+  const updateRecipe = async (recipe: RecipeRequest, id: string) => {
+    const { data } = await apiClient.put(`/recipes?id=${id}`, recipe, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    setDrafts(prevState => prevState.map(draft => (draft._id === data._id ? data : draft)));
+  };
+
+  const deleteRecipe = async (recipe: Recipe) => {
+    await apiClient.delete(`/recipes?id=${recipe._id}`);
+    await getData();
+  };
+  const publishRecipe = async (recipe: Recipe) => {
+    const { data } = await apiClient.post(`/recipes/publish?id=${recipe._id}`);
+    setDrafts(prevState => prevState.filter(({ _id }) => _id !== recipe._id));
+    setPublished(prevState => [...prevState, data]);
+  };
+
+  const unPublishRecipe = async (recipe: Recipe) => {
+    const { data } = await apiClient.post(`/recipes/unpublish?id=${recipe._id}`);
+    setPublished(prevState => prevState.filter(({ _id }) => _id !== recipe._id));
+    setDrafts(prevState => [...prevState, data]);
+  };
   const contextValue = useMemo(
-    () => ({ drafts, published, loaded, getData, createRecipe }),
+    () => ({
+      drafts,
+      published,
+      loaded,
+      getData,
+      createRecipe,
+      updateRecipe,
+      deleteRecipe,
+      publishRecipe,
+      unPublishRecipe
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [drafts, published, loaded]
   );
 

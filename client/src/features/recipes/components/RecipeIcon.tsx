@@ -3,7 +3,7 @@ import { Clock3, Gauge, ImageOff } from 'lucide-react';
 import { Button } from '@/common/components/Button';
 import config from '@/config';
 
-import { Recipe } from './RecipeContext';
+import { Recipe } from '../RecipeContext';
 
 type RecipeIconProps = {
   recipe: Recipe;

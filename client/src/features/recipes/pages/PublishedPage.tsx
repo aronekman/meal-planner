@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import apiClient from '@/api/Axios';
 import { useAppContext } from '@/common/AppContext';
 import { Button } from '@/common/components/Button';
 import { useToast } from '@/common/components/use-toast';
@@ -14,7 +13,7 @@ const PublishedPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setAppData } = useAppContext();
-  const { loaded, published } = useRecipeContext();
+  const { loaded, published, deleteRecipe, unPublishRecipe } = useRecipeContext();
   const recipe = published.find(recipe => recipe._id === id);
   useEffect(() => {
     setAppData({ showBackButton: true });
@@ -31,16 +30,26 @@ const PublishedPage = () => {
 
   const handleUnPublish = async () => {
     if (!recipe) return;
-    await apiClient.post(`/recipes/unpublish?id=${recipe?._id}`);
+    await unPublishRecipe(recipe);
     toast({ title: `${recipe.name} Unpublished!` });
-    navigate('../');
+    navigate('/recipes');
+  };
+
+  const handleDelete = async () => {
+    if (!recipe) return;
+    await deleteRecipe(recipe);
+    toast({ title: `${recipe.name} Deleted!` });
+    navigate('/recipes');
   };
 
   if (!recipe) return null;
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end p-4">
+      <div className="mb-6 flex justify-end gap-6 p-4">
+        <Button variant="secondary" onClick={handleDelete} disabled={!recipe}>
+          Delete
+        </Button>
         <Button onClick={handleUnPublish} disabled={!recipe}>
           Unpublish
         </Button>

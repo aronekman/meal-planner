@@ -20,7 +20,11 @@ export const modifyRecipe: RequestHandler = async (req, res) => {
   if (recipe.created_by.toString() != req.user?._id.toString()) {
     return res.status(401).send('Unauthorized');
   }
-  const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, { ...req.body, image: req.file?.filename });
+  const updatedRecipe = await Recipe.findByIdAndUpdate(
+    recipeId,
+    { ...req.body, image: req.file?.filename },
+    { new: true }
+  );
   res.status(201).send(updatedRecipe);
 };
 
@@ -55,7 +59,7 @@ export const publishRecipe: RequestHandler = async (req, res) => {
   recipe.published = true;
   recipe.published_at = new Date();
   await recipe.save();
-  res.status(201).end();
+  res.status(201).send(recipe);
 };
 
 export const unpublishRecipe: RequestHandler = async (req, res) => {
@@ -73,7 +77,7 @@ export const unpublishRecipe: RequestHandler = async (req, res) => {
   recipe.published = false;
   recipe.published_at = undefined;
   await recipe.save();
-  res.status(204).end();
+  res.status(200).send(recipe);
 };
 
 export const saveRecipe: RequestHandler = async (req, res) => {

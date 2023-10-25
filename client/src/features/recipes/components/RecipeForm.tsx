@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Clock3, Gauge, ImagePlus, Trash2 } from 'lucide-react';
 import { z } from 'zod';
 
-import { useAppContext } from '@/common/AppContext';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/common/components/Accordion';
 import { Button } from '@/common/components/Button';
 import { Input } from '@/common/components/Input';
@@ -13,9 +12,10 @@ import { Table, TableBody, TableCell, TableRow } from '@/common/components/Table
 import { Textarea } from '@/common/components/TextArea';
 import { useToast } from '@/common/components/use-toast';
 import { parseDecimal, parseInteger } from '@/common/utils/formUtils';
+import config from '@/config';
 
 import { fetchIngredientData, IngredientSchema } from '../Ingredient';
-import { RecipeRequest, useRecipeContext } from '../RecipeContext';
+import { Recipe, RecipeRequest } from '../RecipeContext';
 
 export const RecipeSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
@@ -28,22 +28,25 @@ export const RecipeSchema = z.object({
   cost: z.number().nullable()
 });
 
-const CreateRecipes = () => {
+type RecipeFormProps = {
+  recipe?: Recipe;
+  handleSubmit: (data: RecipeRequest) => Promise<void>;
+};
+
+const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { setAppData } = useAppContext();
-  const { createRecipe } = useRecipeContext();
   const [ingredientQuery, setIngredientQuery] = useState<string>('');
   const [ingredientAmount, setIngredientAmount] = useState<string>('');
   const [data, setData] = useState<RecipeRequest>({
-    name: '',
-    description: '',
-    time: null,
-    difficulty: '',
-    ingredients: [],
-    instructions: '',
+    name: recipe?.name ?? '',
+    description: recipe?.description ?? '',
+    time: recipe?.time ?? null,
+    difficulty: recipe?.difficulty ?? '',
+    ingredients: recipe?.ingredients ?? [],
+    instructions: recipe?.instructions ?? '',
     image: null,
-    cost: null
+    cost: recipe?.cost ?? null
   });
   const [imageData, setImageData] = useState<{ name: string; url: string } | null>(null);
   const nutrients = data.ingredients.reduce(
@@ -54,26 +57,25 @@ const CreateRecipes = () => {
     }
   );
   useEffect(() => {
-    setAppData({ showBackButton: true });
-    return () => {
-      setAppData({ showBackButton: false });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (recipe?.image) {
+      setImageData({ name: recipe.name, url: `${config.baseUrl}/${recipe.image}` });
+    }
+  }, [recipe]);
 
   useEffect(() => {
+    if (recipe) return;
     if (!data.image) {
       setImageData(null);
     } else {
       setImageData({ name: data.image.name, url: URL.createObjectURL(data.image) });
     }
-  }, [data.image]);
+  }, [data.image, recipe]);
 
   const onSubmit = async () => {
     try {
       const payload = RecipeSchema.parse(data);
-      await createRecipe(payload);
-      toast({ title: 'Recipe created successfully' });
+      await handleSubmit(payload);
+      toast({ title: `Recipe ${recipe ? 'updated' : 'created'} successfully!` });
       navigate('/recipes');
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -155,7 +157,7 @@ const CreateRecipes = () => {
               <Gauge className="h-4" />
             </span>
 
-            <Select onValueChange={value => updateData('difficulty', value)}>
+            <Select value={data.difficulty} onValueChange={value => updateData('difficulty', value)}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -274,4 +276,4 @@ const CreateRecipes = () => {
   );
 };
 
-export default CreateRecipes;
+export default RecipeForm;
