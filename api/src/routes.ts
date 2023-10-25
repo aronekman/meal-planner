@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication';
-import { createRecipe, deleteRecipe, getDraftedRecipes, getPublishedRecipes,getSavedRecipes, modifyRecipe, publishRecipe, saveRecipe, unpublishRecipe, unsaveRecipe } from './controllers/recipes';
+import { createRecipe, deleteRecipe, getDraftedRecipes, getPublishedRecipes,getRecipes,getSavedRecipes, modifyRecipe, publishRecipe, saveRecipe, unpublishRecipe, unsaveRecipe } from './controllers/recipes';
 import AuthMiddleware from './middleware/authenticationMiddleware';
 
 const router = Router();
@@ -20,7 +20,12 @@ router.post('/recipes/publish', AuthMiddleware, publishRecipe);
 router.post('/recipes/unpublish', AuthMiddleware, unpublishRecipe);
 router.post('/recipes/save', AuthMiddleware, saveRecipe);
 router.post('/recipes/unsave', AuthMiddleware, unsaveRecipe);
-router.get('/recipes', AuthMiddleware, getPublishedRecipes);
+router.get('/recipes', AuthMiddleware, getRecipes);
 router.get('/recipes/saved', AuthMiddleware, getSavedRecipes);
 router.get('/recipes/drafts', AuthMiddleware, getDraftedRecipes);
+router.get('/recipes/published', AuthMiddleware, getPublishedRecipes);
 export default router;
+
+// Add section for own published Recipe -> My Recipe Page has 3 sections: saved / published / drafts
+// 1. Create recipe -> Draft (unpublished)
+// create recipe page has 3 options: Save changes (modifyRecipe), delete (deleteRecipe), publish (publishRecipe)

@@ -118,7 +118,7 @@ export const unsaveRecipe : RequestHandler = async (req, res) => {
   res.status(404).end();
 };
 
-export const getPublishedRecipes : RequestHandler = async (req, res) => {
+export const getRecipes : RequestHandler = async (req, res) => {
   const recipes = await Recipe.find({ published : true });
   res.send(recipes);
 };
@@ -126,7 +126,7 @@ export const getPublishedRecipes : RequestHandler = async (req, res) => {
 export const getSavedRecipes : RequestHandler = async (req, res) => {
   const recipeIds = req.user?.savedRecipes;
   const recipes = (await Recipe.find({ published : true }))
-    .filter(recipe => recipe.created_by.toString() == req.user?._id.toString() || recipeIds?.includes(recipe._id.toString()));
+    .filter(recipe => recipeIds?.includes(recipe._id.toString()));
   res.send(recipes);
 };
 
@@ -135,7 +135,7 @@ export const getDraftedRecipes : RequestHandler = async (req, res) => {
   res.send(recipes);
 };
 
-export const getRecipes: RequestHandler = async (req, res) => {
-  const recipes = await Recipe.find({ created_by: req.user?._id });
+export const getPublishedRecipes : RequestHandler = async (req, res) => {
+  const recipes = await Recipe.find({ published : true, created_by : req.user?._id });
   res.send(recipes);
 };
