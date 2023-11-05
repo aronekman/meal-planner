@@ -16,7 +16,7 @@ export const createUser: RequestHandler = async (req, res) => {
   }
   const hash = await bcrypt.hash(password, 10);
   await User.create({ userName: username, passwordHash: hash });
-  return res.status(201).send('User registration succesfull');
+  return res.status(201).send('User registration succesful');
 };
 
 export const handleLogin: RequestHandler = async (req, res) => {
