@@ -15,7 +15,7 @@ export const modifyRecipe: RequestHandler = async (req, res) => {
   }
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    return res.status(404);
+    return res.status(404).json({ error : 'Recipe Id not found'});
   }
   if (recipe.created_by.toString() != req.user?._id.toString()) {
     return res.status(401).send('Unauthorized');
@@ -35,9 +35,9 @@ export const deleteRecipe: RequestHandler = async (req, res) => {
   }
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    return res.status(204);
+    return res.status(204).end();
   }
-  if (recipe.created_by != req.user?._id) {
+  if (recipe.created_by.toString() != req.user?._id.toString()) {
     return res.status(401).send('Unauthorized');
   }
   await Recipe.findByIdAndDelete(recipeId);
@@ -51,7 +51,7 @@ export const publishRecipe: RequestHandler = async (req, res) => {
   }
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    return res.status(404);
+    return res.status(404).json({ error : 'Recipe Id not found'});
   }
   if (recipe.created_by.toString() != req.user?._id.toString()) {
     return res.status(401).send('Unauthorized');
@@ -59,7 +59,7 @@ export const publishRecipe: RequestHandler = async (req, res) => {
   recipe.published = true;
   recipe.published_at = new Date();
   await recipe.save();
-  res.status(201).send(recipe);
+  res.status(200).send(recipe);
 };
 
 export const unpublishRecipe: RequestHandler = async (req, res) => {
@@ -69,7 +69,7 @@ export const unpublishRecipe: RequestHandler = async (req, res) => {
   }
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    return res.status(404);
+    return res.status(404).json({ error : 'Recipe Id not found'});
   }
   if (recipe.created_by.toString() != req.user?._id.toString()) {
     return res.status(401).send('Unauthorized');
@@ -87,7 +87,7 @@ export const saveRecipe: RequestHandler = async (req, res) => {
   }
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    return res.status(404);
+    return res.status(404).json({ error : 'Recipe Id not found'});
   }
   const user = req.user;
   if (!user) {
