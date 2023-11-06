@@ -13,8 +13,8 @@ import {
   modifyRecipe,
   publishRecipe,
   saveRecipe,
-  unpublishRecipe
-} from './controllers/recipes';
+  unpublishRecipe,
+  unsaveRecipe} from './controllers/recipes';
 import AuthMiddleware from './middleware/authenticationMiddleware';
 
 const router = Router();
@@ -31,6 +31,7 @@ router.delete('/recipes', AuthMiddleware, deleteRecipe);
 router.post('/recipes/publish', AuthMiddleware, publishRecipe);
 router.post('/recipes/unpublish', AuthMiddleware, unpublishRecipe);
 router.post('/recipes/save', AuthMiddleware, saveRecipe);
+router.post('/recipes/unsave', AuthMiddleware, unsaveRecipe);
 router.get('/recipes', AuthMiddleware, getRecipes);
 router.get('/recipes/saved', AuthMiddleware, getSavedRecipes);
 router.get('/recipes/drafts', AuthMiddleware, getDraftedRecipes);

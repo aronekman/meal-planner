@@ -98,6 +98,24 @@ export const saveRecipe: RequestHandler = async (req, res) => {
   return res.status(200).send(recipe);
 };
 
+export const unsaveRecipe : RequestHandler = async (req, res) => {
+  const recipeId = req.query.id;
+  if (!recipeId) {
+    return res.status(400).send('Id of recipe not specified');
+  }
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) {
+    return res.status(404).json({ error: 'Recipe Id not found' });
+  }
+  const user = req.user;
+  if (!user) {
+    return res.status(401).send('Unauthorized');
+  }
+  const updatedUser = await User.findByIdAndUpdate(user._id, { $pull: { savedRecipes: recipe._id } }, { new: true });
+  if (!updatedUser) return res.sendStatus(404);
+  return res.status(200).send(recipe);
+};
+
 export const getRecipes: RequestHandler = async (req, res) => {
   const recipes = await Recipe.find({ published: true });
   res.send(recipes);
