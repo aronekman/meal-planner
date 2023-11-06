@@ -1,14 +1,17 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import AppLayout from './common/AppLayout';
 import Login from './features/authentication/Login';
 import Register from './features/authentication/Register';
+import { ExploreProvider } from './features/explore/ExploreContext';
+import FindRecipes from './features/explore/pages/FindRecipes';
+import RecipeDetailPage from './features/explore/pages/RecipeDetailPage';
 import CreateRecipe from './features/recipes/pages/CreateRecipe';
 import DraftPage from './features/recipes/pages/DraftPage';
 import EditRecipe from './features/recipes/pages/EditRecipe';
 import MyRecipes from './features/recipes/pages/MyRecipes';
 import PublishedPage from './features/recipes/pages/PublishedPage';
-import { RecipeProvider } from './features/recipes/RecipeContext';
+import SavedPage from './features/recipes/pages/SavedPage';
 import ApplicationWrapper from './App';
 
 const router = createBrowserRouter([
@@ -24,23 +27,30 @@ const router = createBrowserRouter([
           { index: true, element: <h1>Home</h1> },
           {
             path: 'recipes',
-            element: (
-              <RecipeProvider>
-                <Outlet />
-              </RecipeProvider>
-            ),
             children: [
               { index: true, element: <MyRecipes /> },
               { path: 'create', element: <CreateRecipe /> },
               { path: ':id/edit', element: <EditRecipe /> },
               { path: ':id/draft', element: <DraftPage /> },
-              { path: ':id/published', element: <PublishedPage /> }
+              { path: ':id/published', element: <PublishedPage /> },
+              { path: ':id/saved', element: <SavedPage /> }
             ]
           },
-          { path: 'explore', element: <h1>Find Recipes</h1> }
+          {
+            path: 'explore',
+            element: (
+              <ExploreProvider>
+                <Outlet />
+              </ExploreProvider>
+            ),
+            children: [
+              { index: true, element: <FindRecipes /> },
+              { path: ':id', element: <RecipeDetailPage /> }
+            ]
+          }
         ]
-      },
-      { path: '*', element: <Navigate to="/" /> }
+      }
+      /* { path: '*', element: <Navigate to="/" /> } */
     ]
   }
 ]);

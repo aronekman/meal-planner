@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
 
 const NavBar = () => {
   return (
-    <nav className="sticky bottom-0 grid grid-flow-col bg-black p-2">
+    <nav className="fixed bottom-0 grid w-full grid-flow-col bg-black p-2">
       {navItems.map(({ name, path }) => (
         <NavLink key={name} to={path}>
           {name}

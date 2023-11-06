@@ -8,13 +8,13 @@ import { useToast } from '@/common/components/use-toast';
 import RecipeDetails from '../components/RecipeDetails';
 import { useRecipeContext } from '../RecipeContext';
 
-const PublishedPage = () => {
+const SavedPage = () => {
   const { toast } = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
   const { setAppData } = useAppContext();
-  const { loaded, published, deleteRecipe, unPublishRecipe } = useRecipeContext();
-  const recipe = published.find(recipe => recipe._id === id);
+  const { loaded, saved, unSaveRecipe } = useRecipeContext();
+  const recipe = saved.find(recipe => recipe._id === id);
   useEffect(() => {
     setAppData({ showBackButton: true });
     return () => {
@@ -28,34 +28,24 @@ const PublishedPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, recipe]);
 
-  const handleUnPublish = async () => {
+  const handleUnsave = async () => {
     if (!recipe) return;
-    await unPublishRecipe(recipe);
-    toast({ title: `${recipe.name} Unpublished!` });
-    navigate('/recipes');
-  };
-
-  const handleDelete = async () => {
-    if (!recipe) return;
-    await deleteRecipe(recipe);
-    toast({ title: `${recipe.name} Deleted!` });
-    navigate('/recipes');
+    await unSaveRecipe(recipe);
+    toast({ title: `${recipe.name} Published!` });
+    navigate('../');
   };
 
   if (!recipe) return null;
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end gap-6 p-4">
-        <Button variant="secondary" onClick={handleDelete} disabled={!recipe}>
-          Delete
-        </Button>
-        <Button onClick={handleUnPublish} disabled={!recipe} variant="outline">
-          Unpublish
+      <div className="mb-6 flex justify-end p-4">
+        <Button onClick={handleUnsave} disabled={!recipe} variant="outline">
+          Unsave
         </Button>
       </div>
     </div>
   );
 };
 
-export default PublishedPage;
+export default SavedPage;

@@ -17,7 +17,7 @@ import config from '@/config';
 import { fetchIngredientData, IngredientSchema } from '../Ingredient';
 import { Recipe, RecipeRequest } from '../RecipeContext';
 
-export const RecipeSchema = z.object({
+export const RecipeRequestSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   description: z.string(),
   time: z.number().int().nullable(),
@@ -73,7 +73,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
 
   const onSubmit = async () => {
     try {
-      const payload = RecipeSchema.parse(data);
+      const payload = RecipeRequestSchema.parse(data);
       await handleSubmit(payload);
       toast({ title: `Recipe ${recipe ? 'updated' : 'created'} successfully!` });
       navigate('/recipes');

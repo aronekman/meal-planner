@@ -33,7 +33,9 @@ const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
           </div>
         </div>
         {recipe.image ? (
-          <img className="rounded" src={`${config.baseUrl}/${recipe.image}`} />
+          <div className="overflow-hidden">
+            <img className="rounded" src={`${config.baseUrl}/${recipe.image}`} />
+          </div>
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded">
             <ImageOff className="h-10 w-10" />

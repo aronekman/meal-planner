@@ -95,7 +95,7 @@ export const saveRecipe: RequestHandler = async (req, res) => {
   }
   const updatedUser = await User.findByIdAndUpdate(user._id, { $push: { savedRecipes: recipe._id } }, { new: true });
   if (!updatedUser) return res.sendStatus(404);
-  return res.status(200).send({ savedRecipes: updatedUser?.savedRecipes });
+  return res.status(200).send(recipe);
 };
 
 export const getRecipes: RequestHandler = async (req, res) => {

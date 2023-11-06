@@ -1,19 +1,14 @@
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/common/components/Accordion';
 import { Button } from '@/common/components/Button';
 
-import { useRecipeContext } from '../RecipeContext';
 import RecipeIcon from '../components/RecipeIcon';
+import { useRecipeContext } from '../RecipeContext';
 
 const MyRecipes = () => {
-  const { drafts, published, getData, loaded } = useRecipeContext();
+  const { drafts, published, saved } = useRecipeContext();
   const navigate = useNavigate();
-  useEffect(() => {
-    !loaded && getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 p-4">
@@ -39,6 +34,16 @@ const MyRecipes = () => {
             <div className="grid grid-cols-2 gap-2">
               {published.map(recipe => (
                 <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}/published`)} />
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="saved">
+          <AccordionTrigger>Saved Recipes</AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-2 gap-2">
+              {saved.map(recipe => (
+                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}/saved`)} />
               ))}
             </div>
           </AccordionContent>
