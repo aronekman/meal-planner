@@ -21,9 +21,9 @@ const router = createBrowserRouter([
       {
         element: <ApplicationWrapper />,
         children: [
-          { index: true, element: <Navigate to="/recipes" /> },
+          { index: true, element: <h1>Home</h1> },
           {
-            path: '/recipes',
+            path: 'recipes',
             element: (
               <RecipeProvider>
                 <Outlet />
@@ -36,7 +36,8 @@ const router = createBrowserRouter([
               { path: ':id/draft', element: <DraftPage /> },
               { path: ':id/published', element: <PublishedPage /> }
             ]
-          }
+          },
+          { path: 'explore', element: <h1>Find Recipes</h1> }
         ]
       },
       { path: '*', element: <Navigate to="/" /> }

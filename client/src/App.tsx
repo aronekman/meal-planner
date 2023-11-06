@@ -5,6 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useAppContext } from './common/AppContext';
 import { Button } from './common/components/Button';
 import { useAuthContext } from './features/authentication/AuthContext';
+import NavBar from './features/navigation/NavBar';
 
 const ApplicationWrapper = () => {
   const {
@@ -23,7 +24,7 @@ const ApplicationWrapper = () => {
   if (isLoading || !isLoggedIn) return null;
   return (
     <div className="h-screen w-screen">
-      <nav className="sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2">
+      <div className="sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2">
         {showBackButton && (
           <Button asChild variant="link" size="sm" className="justify-self-start text-secondary-foreground">
             <Link to="../">
@@ -35,10 +36,11 @@ const ApplicationWrapper = () => {
         <Button onClick={logout} variant="secondary" size="sm" className="col-start-3 justify-self-end">
           Log Out
         </Button>
-      </nav>
-      <main className="h-[calc(100vh-52px)] ">
+      </div>
+      <main className="h-[calc(100vh-52px-40px)] ">
         <Outlet />
       </main>
+      <NavBar />
     </div>
   );
 };
