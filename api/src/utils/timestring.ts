@@ -3,7 +3,6 @@ const verifyDatetime = (datetimeObj: unknown) => {
 };
 
 const extractTime = (time : unknown) => {
-  console.log(time);
   if (typeof time == 'string' || typeof time == 'number') {
     const datetimeObj = new Date(time);
     if (verifyDatetime(datetimeObj)) {
