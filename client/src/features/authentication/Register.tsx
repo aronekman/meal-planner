@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { z } from 'zod';
 
 import apiClient from '@/api/Axios';
+import { Background } from '@/common/components/Background';
 import { Button } from '@/common/components/Button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/common/components/Form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/common/components/Form';
+import { GoogleLoginButton } from '@/common/components/GoogleLogin';
 import { Input } from '@/common/components/Input';
 import { useToast } from '@/common/components/use-toast';
 
@@ -39,58 +42,83 @@ const Register = () => {
   });
 
   return (
-    <div className="flex flex-col items-center p-10">
-      <h1 className="flex text-3xl font-bold">Register</h1>
-      <div className="h-8"></div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
+    <div>
+      <Background />
+      <div
+        className="
+        absolute left-[50%] top-[50%] flex w-[80%]
+        max-w-[300px] translate-x-[-50%]
+        translate-y-[-50%]
+        flex-col items-center rounded-xl border-[1px]
+        border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">
+        <h1 className="my-8 flex font-arbutus text-3xl">Sign Up</h1>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Username"
+                      className="border-none bg-stone-100 font-arbutus 
+                        text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      className="mt-3 border-none bg-stone-100 
+                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      {...field}
+                    />
+
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
             control={form.control}
             name="verification"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+              <FormItem className='mb-6'>
                 <FormControl>
-                  <Input type="password" {...field} />
+                <Input
+                      type="password"
+                      placeholder="Confirm password"
+                      className="mt-3 first-line:border-none bg-stone-100 
+                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      {...field}
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="mt-5 w-full" type="submit">
-            Sign Up
-          </Button>
-        </form>
-      </Form>
-      <Button asChild variant="link" className="pt-3">
+            <Button type="submit">Sign Up</Button>
+          </form>
+        </Form>
+        <hr className="my-3 w-full border-[1px] border-black"></hr>
+        <GoogleOAuthProvider clientId="454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com">
+          <GoogleLoginButton />
+        </GoogleOAuthProvider>
+        <Button asChild variant="link" className="py-8 font-arbutus text-orange-400 text-center">
         <Link to="/login">Already have an account? Login!</Link>
-      </Button>
+        </Button>
+      </div>
     </div>
   );
 };
