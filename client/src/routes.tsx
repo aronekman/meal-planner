@@ -6,6 +6,8 @@ import Register from './features/authentication/Register';
 import { ExploreProvider } from './features/explore/ExploreContext';
 import FindRecipes from './features/explore/pages/FindRecipes';
 import RecipeDetailPage from './features/explore/pages/RecipeDetailPage';
+import HomePage from './features/plan/HomePage';
+import { PlanProvider } from './features/plan/PlanContext';
 import CreateRecipe from './features/recipes/pages/CreateRecipe';
 import DraftPage from './features/recipes/pages/DraftPage';
 import EditRecipe from './features/recipes/pages/EditRecipe';
@@ -24,7 +26,14 @@ const router = createBrowserRouter([
       {
         element: <ApplicationWrapper />,
         children: [
-          { index: true, element: <h1>Home</h1> },
+          {
+            index: true,
+            element: (
+              <PlanProvider>
+                <HomePage />
+              </PlanProvider>
+            )
+          },
           {
             path: 'recipes',
             children: [
