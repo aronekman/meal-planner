@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import Plan from '../models/Plan';
-import { extractTime, verifyDatetime } from '../utils/timestring';
+import { verifyDatetime } from '../utils/timestring';
 
 export const getPlan: RequestHandler = async (req, res) => {
   const queryDateValue = req.query.date;
@@ -30,7 +30,7 @@ export const getPlan: RequestHandler = async (req, res) => {
   res.status(200).send(plan);
 };
 
-export const updatePlan: RequestHandler = async (req, res) => {
+/* export const updatePlan: RequestHandler = async (req, res) => {
   const queryDateValue = req.query.date;
   if (!queryDateValue) {
     return res.status(404).json({ error: 'Query not found' });
@@ -60,4 +60,20 @@ export const updatePlan: RequestHandler = async (req, res) => {
     { new: true }
   );
   res.status(201).send(updatedPlan);
+};
+ */
+export const addMeal: RequestHandler = async (req, res) => {
+  const id = req.query.id;
+  if (!id) {
+    return res.sendStatus(400);
+  }
+  const plan = await Plan.findOne({ _id: id });
+  if (!plan) return res.status(404).send('Plan not found');
+  if (plan.user.toString() !== req.user?._id.toString()) return res.sendStatus(401);
+
+  plan.meals.push(req.body.meal);
+  await plan.save();
+  await plan.populate('meals.recipe');
+
+  res.status(201).send(plan);
 };
