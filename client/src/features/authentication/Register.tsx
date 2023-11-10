@@ -51,7 +51,7 @@ const Register = () => {
         translate-y-[-50%]
         flex-col items-center rounded-xl border-[1px]
         border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">
-        <h1 className="my-8 flex font-arbutus text-3xl">Sign Up</h1>
+        <h1 className="my-8 flex font-alegreya font-semibold text-3xl">Sign Up</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col">
             <FormField
@@ -62,8 +62,8 @@ const Register = () => {
                   <FormControl>
                     <Input
                       placeholder="Username"
-                      className="border-none bg-stone-100 font-arbutus 
-                        text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      className="border-none bg-stone-100 font-alegreya 
+                      text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
                   </FormControl>
@@ -81,7 +81,7 @@ const Register = () => {
                       type="password"
                       placeholder="Password"
                       className="mt-3 border-none bg-stone-100 
-                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                        font-alegreya text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
 
@@ -100,7 +100,7 @@ const Register = () => {
                       type="password"
                       placeholder="Confirm password"
                       className="mt-3 first-line:border-none bg-stone-100 
-                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                        font-alegreya text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
                 </FormControl>
@@ -108,14 +108,14 @@ const Register = () => {
               </FormItem>
             )}
           />
-            <Button type="submit">Sign Up</Button>
+            <Button className="text-base" type="submit">Sign Up</Button>
           </form>
         </Form>
         <hr className="my-3 w-full border-[1px] border-black"></hr>
         <GoogleOAuthProvider clientId="454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com">
           <GoogleLoginButton />
         </GoogleOAuthProvider>
-        <Button asChild variant="link" className="py-8 font-arbutus text-orange-400 text-center">
+        <Button asChild variant="link" className="my-2 font-alegreya text-orange-400 text-center h-fit ">
         <Link to="/login">Already have an account? Login!</Link>
         </Button>
       </div>

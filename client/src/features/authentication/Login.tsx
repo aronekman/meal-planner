@@ -49,7 +49,7 @@ const Login = () => {
         translate-y-[-50%]
         flex-col items-center rounded-xl border-[1px]
         border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">
-        <h1 className="my-8 flex font-arbutus text-3xl">Login</h1>
+        <h1 className="my-8 flex font-alegreya font-semibold text-3xl">Login</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col">
             <FormField
@@ -60,7 +60,7 @@ const Login = () => {
                   <FormControl>
                     <Input
                       placeholder="Username"
-                      className="border-none bg-stone-100 font-arbutus 
+                      className="text-base border-none bg-stone-100 font-alegreya 
                         text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
@@ -77,25 +77,25 @@ const Login = () => {
                     <Input
                       type="password"
                       placeholder="Password"
-                      className="mt-3 border-none bg-stone-100 
-                        font-arbutus text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      className="text-base mt-3 border-none bg-stone-100 
+                        font-alegreya text-orange-400 placeholder:italic placeholder:text-orange-300"
                       {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button variant="link" className="self-end px-0 font-arbutus text-xs">
+            <Button variant="link" className="self-end px-0 font-alegreya text-sm">
               Forgot password?
             </Button>
-            <Button type="submit">Login</Button>
+            <Button className="text-base" type="submit">Login</Button>
           </form>
         </Form>
         <hr className="my-3 w-full border-[1px] border-black"></hr>
         <GoogleOAuthProvider clientId="454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com">
-          <GoogleLoginButton />
+          <GoogleLoginButton/>
         </GoogleOAuthProvider>
-        <Button asChild variant="link" className="py-8 font-arbutus text-orange-400">
+        <Button asChild variant="link" className="my-2 font-alegreya text-orange-400 h-fit">
           <Link to="/register">No account? Sign Up!</Link>
         </Button>
       </div>

@@ -66,6 +66,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out'
       },
       fontFamily: {
+        alegreya : ['Alegreya', 'serif'],
         arbutus: ['Arbutus Slab', 'sans-serif'],
         hand: ['Gochi Hand', 'cursive']
       }
