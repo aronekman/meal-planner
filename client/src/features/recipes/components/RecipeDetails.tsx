@@ -13,8 +13,8 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   const { name, image, time, difficulty, description, ingredients, instructions } = recipe;
   return (
     <div className="flex w-full flex-col">
-      <h1 className="py-2 text-center text-2xl font-bold capitalize">{name}</h1>
-      {image && <img className="h-full max-h-40 w-full object-cover object-top " src={`${config.baseUrl}/${image}`} />}
+      <h1 className="py-5 px-10 text-center text-2xl font-arbutus capitalize">{name}</h1>
+      {image && <img className="w-full aspect-video bg-stone-100 object-contain object-top " src={`${config.baseUrl}/${image}`} />}
       <div className="flex flex-col gap-2 p-4">
         <div className="flex gap-2">
           <span className="max-h-64 flex-shrink flex-grow-[3] basis-0 overflow-x-auto font-semibold">
