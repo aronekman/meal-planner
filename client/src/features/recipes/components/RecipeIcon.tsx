@@ -12,36 +12,35 @@ type RecipeIconProps = {
 
 const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
   return (
-    <div className="aspect-square w-full">
-      <Button onClick={onClick} variant="secondary" className="flex h-full w-full flex-col justify-center p-0">
-        <div className="flex w-full flex-row flex-nowrap  justify-evenly  gap-2 overflow-hidden py-2">
-          <div className="flex h-4 flex-row items-center justify-center">
+    <div className="w-fit">
+      <Button onClick={onClick} variant="secondary" 
+        className="flex h-full w-[30vw] min-w-[140px] max-w-[180px] flex-col justify-start px-0 py-3 bg-white">
+        <div className="w-full grid grid-cols-2">
+          <div className="w-fit flex h-4 flex-row items-center text-xs italic">
             {recipe.time && (
               <>
-                <Clock3 className="h-full" />
-                <span>{recipe.time}</span>
+                <Clock3 className="h-full aspect-square" />
+                <span>{recipe.time} min</span>
               </>
             )}
           </div>
-          <div className="flex h-4 flex-row items-center justify-center">
-            {recipe.difficulty && (
-              <>
-                <Gauge className="h-full" />
-                <span>{recipe.difficulty}</span>
-              </>
-            )}
+          <div className="w-fit flex h-4 flex-row items-center justify-center text-xs italic">
+            <Gauge className="h-full aspect-square" />
+            {recipe.difficulty && <span>{recipe.difficulty}</span>}
           </div>
         </div>
-        {recipe.image ? (
-          <div className="overflow-hidden">
-            <img className="rounded" src={`${config.baseUrl}/${recipe.image}`} />
-          </div>
-        ) : (
-          <div className="flex h-full w-full items-center justify-center rounded">
-            <ImageOff className="h-10 w-10" />
-          </div>
-        )}
-        <h1 className="w-full text-center">{recipe.name}</h1>
+        <div className='bg-[#F0F0F0] w-full aspect-[7/5] overflow-clip my-2 p-2'>
+          {recipe.image ? (
+            <div className="w-full h-full">
+              <img className="w-full h-full object-cover" src={`${config.baseUrl}/${recipe.image}`} />
+            </div>
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <ImageOff className="h-10 w-10" />
+            </div>
+          )}
+        </div>
+        <h1 className="w-full text-center font-arbutus">{recipe.name}</h1>
       </Button>
     </div>
   );
