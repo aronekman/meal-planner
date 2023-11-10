@@ -32,36 +32,7 @@ const ExploreProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getData();
   }, []);
-  /* 
-  const createRecipe = async (recipe: RecipeRequest) => {
-    const { data } = await apiClient.post('/recipes', recipe, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    setDrafts(prevState => [...prevState, data]);
-  };
 
-  const updateRecipe = async (recipe: RecipeRequest, id: string) => {
-    const { data } = await apiClient.put(`/recipes?id=${id}`, recipe, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    setDrafts(prevState => prevState.map(draft => (draft._id === data._id ? data : draft)));
-  };
-
-  const deleteRecipe = async (recipe: Recipe) => {
-    await apiClient.delete(`/recipes?id=${recipe._id}`);
-    await getData();
-  };
-  const publishRecipe = async (recipe: Recipe) => {
-    const { data } = await apiClient.post(`/recipes/publish?id=${recipe._id}`);
-    setDrafts(prevState => prevState.filter(({ _id }) => _id !== recipe._id));
-    setPublished(prevState => [...prevState, data]);
-  };
-
-  const unPublishRecipe = async (recipe: Recipe) => {
-    const { data } = await apiClient.post(`/recipes/unpublish?id=${recipe._id}`);
-    setPublished(prevState => prevState.filter(({ _id }) => _id !== recipe._id));
-    setDrafts(prevState => [...prevState, data]);
-  }; */
   const contextValue = useMemo(
     () => ({ recipes, loaded }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

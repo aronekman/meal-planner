@@ -105,7 +105,8 @@ const RecipeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const unSaveRecipe = async (recipe: Recipe) => {
-    console.log(`Un Saving recipe: ${recipe.name} not yet implemented`);
+    const { data } = await apiClient.post(`/recipes/unsave?id=${recipe._id}`);
+    setSaved(prevState => prevState.filter(({ _id }) => _id !== data._id));
   };
 
   const contextValue = useMemo(
@@ -124,7 +125,7 @@ const RecipeProvider = ({ children }: { children: ReactNode }) => {
       unSaveRecipe
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [drafts, published, loaded]
+    [drafts, published, saved, loaded]
   );
 
   return <RecipeContext.Provider value={contextValue}>{children}</RecipeContext.Provider>;

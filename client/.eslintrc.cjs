@@ -7,7 +7,8 @@ module.exports = {
   plugins: ['react-refresh', 'simple-import-sort'],
   rules: {
     'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error'
+    'simple-import-sort/exports': 'error',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '_' }]
   },
   overrides: [
     {

@@ -24,7 +24,7 @@ const ApplicationWrapper = () => {
 
   if (isLoading || !isLoggedIn) return null;
   return (
-    <div className="h-screen w-screen">
+    <div className="h-[calc(100dvh)] w-screen">
       <div className="sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2">
         {showBackButton && (
           <Button
@@ -40,7 +40,7 @@ const ApplicationWrapper = () => {
           Log Out
         </Button>
       </div>
-      <main className="h-[calc(100vh-52px-40px)] overflow-auto">
+      <main className="h-[calc(100%-52px-40px)] overflow-auto">
         <RecipeProvider>
           <Outlet />
         </RecipeProvider>
