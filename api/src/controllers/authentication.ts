@@ -11,7 +11,7 @@ export const createUser: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).send('Username and Password are required');
   if (await User.exists({ userName: username })) {
-    res.status(400).send('This usernmae is already reserved');
+    res.status(400).send('This username is already reserved');
     return;
   }
   const hash = await bcrypt.hash(password, 10);

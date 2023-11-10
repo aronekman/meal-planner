@@ -66,7 +66,8 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out'
       },
       fontFamily: {
-        arbutus: ['Arbutus Slab', 'sans-serif']
+        arbutus: ['Arbutus Slab', 'sans-serif'],
+        hand: ['Gochi Hand', 'cursive']
       }
     }
   },
