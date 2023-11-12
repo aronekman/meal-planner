@@ -1,6 +1,6 @@
 import { Background } from '@/common/components/Background';
 
-import PlanCard from './PlanCard';
+import PlanCard from './components/PlanCard';
 
 const HomePage = () => {
   return (

@@ -8,12 +8,11 @@ import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/common/comp
 import { Label } from '@/common/components/Label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/common/components/Popover';
 import { cn } from '@/common/utils/tailwindUtils';
-import TimePicker from '@/features/plan/TimePicker';
+import TimePicker from '@/features/plan/components/TimePicker';
 
-import { Recipe, useRecipeContext } from '../recipes/RecipeContext';
-
-import { pad } from './helpers';
-import { usePlanContext } from './PlanContext';
+import { Recipe, useRecipeContext } from '../../recipes/RecipeContext';
+import { pad } from '../helpers';
+import { usePlanContext } from '../PlanContext';
 
 export type Time = {
   hour: number;
@@ -22,7 +21,7 @@ export type Time = {
 
 const AddRecipe = () => {
   const { saved, published, drafts } = useRecipeContext();
-  const { updatePlan } = usePlanContext();
+  const { addMeal } = usePlanContext();
 
   const options: Recipe[] = [...new Set([...saved, ...published, ...drafts])];
 
@@ -33,7 +32,7 @@ const AddRecipe = () => {
 
   const handleSubmit = async () => {
     if (!timeSlot || !recipeId) return;
-    await updatePlan(timeSlot, recipeId);
+    await addMeal(timeSlot, recipeId);
   };
 
   return (

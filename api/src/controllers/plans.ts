@@ -67,13 +67,36 @@ export const addMeal: RequestHandler = async (req, res) => {
   if (!id) {
     return res.sendStatus(400);
   }
-  const plan = await Plan.findOne({ _id: id });
-  if (!plan) return res.status(404).send('Plan not found');
-  if (plan.user.toString() !== req.user?._id.toString()) return res.sendStatus(401);
+  try {
+    const plan = await Plan.findOneAndUpdate(
+      { _id: id },
+      { $push: { meals: req.body.meal } },
+      { sort: { 'meals.time_slot': -1 }, new: true }
+    );
+    if (!plan) return res.status(404).send('Plan not found');
+    await plan.populate('meals.recipe');
 
-  plan.meals.push(req.body.meal);
-  await plan.save();
-  await plan.populate('meals.recipe');
+    return res.status(201).send(plan);
+  } catch (e) {
+    return res.status(400).send(String(e));
+  }
+};
 
-  res.status(201).send(plan);
+export const deleteMeal: RequestHandler = async (req, res) => {
+  const planId = req.query.planId;
+  const mealId = req.query.mealId;
+  if (!planId || !mealId) return res.sendStatus(400);
+  try {
+    const plan = await Plan.findOneAndUpdate(
+      { _id: planId },
+      { $pull: { meals: { _id: mealId } } },
+      { sort: { 'meals.time_slot': -1 }, new: true }
+    );
+    if (!plan) return res.status(404).send('Plan not found');
+    await plan.populate('meals.recipe');
+
+    return res.status(201).send(plan);
+  } catch (e) {
+    return res.status(400).send(String(e));
+  }
 };

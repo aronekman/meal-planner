@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication';
-import { addMeal, getPlan } from './controllers/plans';
+import { addMeal, deleteMeal, getPlan } from './controllers/plans';
 import {
   createRecipe,
   deleteRecipe,
@@ -39,7 +39,8 @@ router.get('/recipes/drafts', AuthMiddleware, getDraftedRecipes);
 router.get('/recipes/published', AuthMiddleware, getPublishedRecipes);
 
 router.get('/plans', AuthMiddleware, getPlan);
-router.put('/plans', AuthMiddleware, addMeal);
+router.post('/meals', AuthMiddleware, addMeal);
+router.delete('/meals', AuthMiddleware, deleteMeal);
 export default router;
 
 // Add section for own published Recipe -> My Recipe Page has 3 sections: saved / published / drafts
