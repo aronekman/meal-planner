@@ -23,6 +23,7 @@ jobs:
           npm run build
           cp ../app.yaml build
           cp ../package.json build/package.json
+          cp -r node_modules build
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
