@@ -12,17 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node
         uses: actions/setup-node@v3
       - name: Build deployment folder
-        run: | 
+        run: |
           cd api
           npm ci
           npm run build
           cp ../app.yaml build
+          ls ./build
           cp ./package.json build
+          ls ./build
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
@@ -35,4 +37,3 @@ jobs:
           version: v1
           project_id: ${{ secrets.GCP_PROJECT }}
           working_directory: api/build
-          
