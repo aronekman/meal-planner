@@ -19,7 +19,7 @@ jobs:
           cd api
           npm ci
           npm run build
-          cp ../app.yaml /build/
+          cp ../app.yaml build
 
       - name: Deploy to App Engine
         id: deploy
