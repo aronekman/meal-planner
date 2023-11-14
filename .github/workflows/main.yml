@@ -14,16 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Use Node
-        uses: actions/setup-node@v3
-      - name: Build deployment folder
-        run: |
-          cd api
-          npm ci
-          npm run build
-          cp ../app.yaml build
-          cp ../package.json build/package.json
-          cp -r node_modules build
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
@@ -35,4 +25,3 @@ jobs:
         with:
           version: v1
           project_id: ${{ secrets.GCP_PROJECT }}
-          working_directory: api/build

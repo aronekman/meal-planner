@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "gcp-build": "",
-    "start": "node index.js"
+    "gcp-build": "cd api && npm ci && npm run build && cd ../client && npm ci && npm run build && move dist ../api/build",
+    "start": "node api/build/index.js"
   }
 }
