@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "gcp-build": "",
+    "start": "node index.js"
+  }
+}
