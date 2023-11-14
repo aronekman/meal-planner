@@ -20,6 +20,10 @@ jobs:
           npm ci
           npm run build
           cp ../app.yaml build
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Deploy to App Engine
         id: deploy
