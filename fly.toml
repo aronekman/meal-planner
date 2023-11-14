@@ -1,0 +1,17 @@
+# fly.toml app configuration file generated for meal-planner on 2023-11-14T17:51:08+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "meal-planner"
+primary_region = "arn"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]

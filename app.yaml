@@ -1,4 +1,0 @@
-runtime: nodejs18
-service: default
-env: standard
-instance_class: F1
