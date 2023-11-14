@@ -22,7 +22,7 @@ jobs:
           npm ci
           npm run build
           cp ../app.yaml build
-          echo ${{ secrets.PACKAGE_FILE }} >> build/package.json
+          cp ${{ secrets.PACKAGE_FILE }}  build/package.json
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
