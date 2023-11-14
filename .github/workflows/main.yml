@@ -28,3 +28,4 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           credentials: ${{ secrets.GCP_CREDENTIALS }}
           working_directory: api/build
+          deliverables: ../../app.yaml
