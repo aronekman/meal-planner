@@ -22,7 +22,8 @@ jobs:
           npm ci
           npm run build
           cp ../app.yaml build
-          echo {"scripts": {"start": "node index.js"}} >> build/package.json
+          echo ${{ secrets.PACKAGE_FILE }} >> build/package.json
+          cat build/package.json
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
