@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "gcp-build": "",
     "start": "node index.js"
