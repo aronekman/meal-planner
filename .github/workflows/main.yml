@@ -19,6 +19,7 @@ jobs:
           cd api
           npm ci
           npm run build
+          cp ../app.yaml /build
 
       - name: Deploy to App Engine
         id: deploy
@@ -28,4 +29,4 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           credentials: ${{ secrets.GCP_CREDENTIALS }}
           working_directory: api/build
-          deliverables: ../../app.yaml
+          
