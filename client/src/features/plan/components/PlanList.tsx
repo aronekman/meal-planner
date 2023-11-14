@@ -25,7 +25,7 @@ const PlanList = () => {
             <div className="col-span-2 h-full  w-full  bg-gray-100 p-1">
               {meal.recipe.image ? (
                 <div className="flex h-full items-center overflow-hidden">
-                  <img className="object-contain" src={`${config.baseUrl}/${meal.recipe.image}`} />
+                  <img className="object-contain" src={`${config.baseUrl}/uploads/${meal.recipe.image}`} />
                 </div>
               ) : (
                 <div className="flex h-full w-full items-center justify-center rounded">

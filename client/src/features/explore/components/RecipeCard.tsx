@@ -20,7 +20,10 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
       <div className="h-full w-full flex-shrink flex-grow-[2] basis-0">
         {recipe.image ? (
           <div className="h-full overflow-hidden">
-            <img className="h-full w-full rounded object-cover object-top" src={`${config.baseUrl}/${recipe.image}`} />
+            <img
+              className="h-full w-full rounded object-cover object-top"
+              src={`${config.baseUrl}/uploads/${recipe.image}`}
+            />
           </div>
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded">

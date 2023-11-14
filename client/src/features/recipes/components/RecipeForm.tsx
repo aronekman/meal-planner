@@ -58,7 +58,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
   );
   useEffect(() => {
     if (recipe?.image) {
-      setImageData({ name: recipe.name, url: `${config.baseUrl}/${recipe.image}` });
+      setImageData({ name: recipe.name, url: `${config.baseUrl}/uploads/${recipe.image}` });
     }
   }, [recipe]);
 

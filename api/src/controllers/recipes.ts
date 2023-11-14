@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
-import Recipe from '../models/Recipe';
-import User from '../models/User';
+import Recipe from '../models/Recipe.js';
+import User from '../models/User.js';
 
 export const createRecipe: RequestHandler = async (req, res) => {
   const recipe = await Recipe.create({ ...req.body, created_by: req.user?._id, image: req.file?.filename });

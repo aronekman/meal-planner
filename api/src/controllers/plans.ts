@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
-import Plan from '../models/Plan';
-import { verifyDatetime } from '../utils/timestring';
+import Plan from '../models/Plan.js';
+import { verifyDatetime } from '../utils/timestring.js';
 
 export const getPlan: RequestHandler = async (req, res) => {
   const queryDateValue = req.query.date;

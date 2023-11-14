@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication';
-import { addMeal, deleteMeal, getPlan } from './controllers/plans';
+import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication.js';
+import { addMeal, deleteMeal, getPlan } from './controllers/plans.js';
 import {
   createRecipe,
   deleteRecipe,
@@ -15,8 +15,8 @@ import {
   saveRecipe,
   unpublishRecipe,
   unsaveRecipe
-} from './controllers/recipes';
-import AuthMiddleware from './middleware/authenticationMiddleware';
+} from './controllers/recipes.js';
+import AuthMiddleware from './middleware/authenticationMiddleware.js';
 
 const router = Router();
 

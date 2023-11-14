@@ -132,3 +132,4 @@ dist
 
 db_data/
 uploads/
+build/
