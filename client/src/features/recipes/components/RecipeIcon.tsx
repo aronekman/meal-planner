@@ -17,16 +17,12 @@ const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
         className="flex h-full w-[30vw] min-w-[140px] max-w-[180px] flex-col justify-start px-0 py-3 bg-white">
         <div className="w-full grid grid-cols-2">
           <div className="w-fit flex h-4 flex-row items-center text-xs italic">
-            {recipe.time && (
-              <>
-                <Clock3 className="h-full aspect-square" />
-                <span>{recipe.time} min</span>
-              </>
-            )}
+            <Clock3 className="h-full aspect-square" />
+            {recipe.time ? (<span>{recipe.time} min</span>) : (<span>--</span>)}
           </div>
           <div className="w-fit flex h-4 flex-row items-center justify-center text-xs italic">
-            <Gauge className="h-full aspect-square" />
-            {recipe.difficulty && <span>{recipe.difficulty}</span>}
+            <Gauge className="h-full aspect-square" /> 
+            {recipe.difficulty ? (<span>{recipe.difficulty}</span>):(<span>--</span>)}
           </div>
         </div>
         <div className='bg-[#F0F0F0] w-full aspect-[7/5] overflow-clip my-2 p-2'>
@@ -40,7 +36,7 @@ const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
             </div>
           )}
         </div>
-        <h1 className="w-full text-center font-arbutus">{recipe.name}</h1>
+        <h1 className="w-full text-center font-alegreya text-base">{recipe.name}</h1>
       </Button>
     </div>
   );
