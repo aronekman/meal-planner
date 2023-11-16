@@ -117,7 +117,34 @@ export const unsaveRecipe: RequestHandler = async (req, res) => {
 };
 
 export const getRecipes: RequestHandler = async (req, res) => {
-  const recipes = await Recipe.find({ published: true, created_by: { $nin: req.user?._id } });
+  const searchPhrase = req.query.search;
+  const timeLimit = req.query.timeLimit;
+  const difficulty = req.query.difficulty;
+  const costLimit = req.query.costLimit;
+
+  let recipes = await Recipe.find({ published: true, created_by: { $nin: req.user?._id }}).sort('-published_at');
+  recipes = recipes.filter((recipe) => {
+    let valid = true;
+    if (searchPhrase) {
+      valid = valid && recipe.name.toLowerCase().includes(searchPhrase.toString().toLowerCase());
+    }
+    if (timeLimit) {
+      const numTime = parseFloat(timeLimit.toString());
+      if (!isNaN(numTime)) {
+        valid = recipe.time ? valid && recipe.time <= numTime : false;
+      }
+    }
+    if (difficulty) {
+      valid = recipe.difficulty ? difficulty.toString().includes(recipe.difficulty) : false;
+    }
+    if (costLimit) {
+      const numCost = parseFloat(costLimit.toString());
+      if (!isNaN(numCost)) {
+        valid = recipe.cost ? valid && recipe.cost <= numCost : false;
+      }
+    }
+    return valid;
+  });
   res.send(recipes);
 };
 

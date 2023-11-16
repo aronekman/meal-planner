@@ -42,7 +42,3 @@ router.get('/plans', AuthMiddleware, getPlan);
 router.post('/meals', AuthMiddleware, addMeal);
 router.delete('/meals', AuthMiddleware, deleteMeal);
 export default router;
-
-// Add section for own published Recipe -> My Recipe Page has 3 sections: saved / published / drafts
-// 1. Create recipe -> Draft (unpublished)
-// create recipe page has 3 options: Save changes (modifyRecipe), delete (deleteRecipe), publish (publishRecipe)
