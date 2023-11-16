@@ -25,10 +25,10 @@ const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
             {recipe.difficulty ? (<span>{recipe.difficulty}</span>):(<span>--</span>)}
           </div>
         </div>
-        <div className='bg-[#F0F0F0] w-full aspect-[7/5] overflow-clip my-2 p-2'>
+        <div className="my-2 aspect-[7/5] w-full overflow-clip bg-[#F0F0F0] p-2">
           {recipe.image ? (
-            <div className="w-full h-full">
-              <img className="w-full h-full object-cover" src={`${config.baseUrl}/${recipe.image}`} />
+            <div className="h-full w-full">
+              <img className="h-full w-full object-cover" src={`${config.baseUrl}/uploads/${recipe.image}`} />
             </div>
           ) : (
             <div className="flex h-full w-full items-center justify-center">

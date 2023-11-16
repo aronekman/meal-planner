@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import User, { IUser } from '../models/User';
-import config from '../utils/config';
+import User, { IUser } from '../models/User.js';
+import config from '../utils/config.js';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

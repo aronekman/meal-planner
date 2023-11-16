@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
-import Plan from '../models/Plan';
-import { extractTime, verifyDatetime } from '../utils/timestring';
+import Plan from '../models/Plan.js';
+import { verifyDatetime } from '../utils/timestring.js';
 
 export const getPlan: RequestHandler = async (req, res) => {
   const queryDateValue = req.query.date;
@@ -30,7 +30,7 @@ export const getPlan: RequestHandler = async (req, res) => {
   res.status(200).send(plan);
 };
 
-export const updatePlan: RequestHandler = async (req, res) => {
+/* export const updatePlan: RequestHandler = async (req, res) => {
   const queryDateValue = req.query.date;
   if (!queryDateValue) {
     return res.status(404).json({ error: 'Query not found' });
@@ -60,4 +60,43 @@ export const updatePlan: RequestHandler = async (req, res) => {
     { new: true }
   );
   res.status(201).send(updatedPlan);
+};
+ */
+export const addMeal: RequestHandler = async (req, res) => {
+  const id = req.query.id;
+  if (!id) {
+    return res.sendStatus(400);
+  }
+  try {
+    const plan = await Plan.findOneAndUpdate(
+      { _id: id },
+      { $push: { meals: req.body.meal } },
+      { sort: { 'meals.time_slot': -1 }, new: true }
+    );
+    if (!plan) return res.status(404).send('Plan not found');
+    await plan.populate('meals.recipe');
+
+    return res.status(201).send(plan);
+  } catch (e) {
+    return res.status(400).send(String(e));
+  }
+};
+
+export const deleteMeal: RequestHandler = async (req, res) => {
+  const planId = req.query.planId;
+  const mealId = req.query.mealId;
+  if (!planId || !mealId) return res.sendStatus(400);
+  try {
+    const plan = await Plan.findOneAndUpdate(
+      { _id: planId },
+      { $pull: { meals: { _id: mealId } } },
+      { sort: { 'meals.time_slot': -1 }, new: true }
+    );
+    if (!plan) return res.status(404).send('Plan not found');
+    await plan.populate('meals.recipe');
+
+    return res.status(201).send(plan);
+  } catch (e) {
+    return res.status(400).send(String(e));
+  }
 };

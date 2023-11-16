@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 
-import User from '../models/User';
-import UserToken from '../models/UserToken';
-import { generateTokens } from '../utils/authentication';
-import config from '../utils/config';
+import User from '../models/User.js';
+import UserToken from '../models/UserToken.js';
+import { generateTokens } from '../utils/authentication.js';
+import config from '../utils/config.js';
 
 export const createUser: RequestHandler = async (req, res) => {
   const { username, password } = req.body;

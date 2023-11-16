@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-import { IUser } from '../models/User';
-import UserToken from '../models/UserToken';
-import config from './config';
+import { IUser } from '../models/User.js';
+import UserToken from '../models/UserToken.js';
+import config from './config.js';
 
 export const generateTokens = async (user: IUser) => {
   const accessToken = jwt.sign({ id: user._id }, config.atSecret, { expiresIn: config.atLifeTime });

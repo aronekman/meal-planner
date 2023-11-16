@@ -5,8 +5,10 @@ import { Button } from '@/common/components/Button';
 import { Calendar } from '@/common/components/Calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/common/components/Popover';
 
+import { usePlanContext } from '../PlanContext';
+
 import AddRecipe from './AddRecipe';
-import { usePlanContext } from './PlanContext';
+import PlanList from './PlanList';
 
 const PlanCard = () => {
   const { date, setDate } = usePlanContext();
@@ -24,6 +26,7 @@ const PlanCard = () => {
           <Calendar mode="single" required selected={date} onSelect={day => day && setDate(day)} initialFocus />
         </PopoverContent>
       </Popover>
+      <PlanList />
       <AddRecipe />
     </div>
   );
