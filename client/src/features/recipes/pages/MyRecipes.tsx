@@ -15,7 +15,7 @@ const MyRecipes = () => {
     <div className="flex flex-col gap-2 py-4 px-9">
       <Button asChild variant="default" className='fixed bottom-20 right-9 \
         rounded-full p-2 drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]'>
-        <Link className="w-fit" to="create">
+        <Link className="w-fit text-lg font-bold align-middle" to="create">
           <Plus className='h-full text-white'></Plus>
         </Link>
       </Button>
