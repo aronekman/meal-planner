@@ -278,10 +278,10 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
         </Accordion>
 
         <div className="mt-4 mb-6 flex justify-end gap-4">
-          <Button variant="outline" className='w-16' asChild>
+          <Button variant="outline" className='w-20' asChild>
             <Link to="../">Cancel</Link>
           </Button>
-          <Button onClick={onSubmit} className='w-16'>
+          <Button onClick={onSubmit} className='w-20'>
             Save
           </Button>
         </div>
