@@ -116,77 +116,87 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
           target.value = '';
         }}
       />
-      <Button variant="secondary" asChild>
-        <Label htmlFor="image-upload" className="h-full p-0">
+      <Button variant="secondary" className='' asChild>
+        <Label htmlFor="image-upload" className="h-fit p-0">
           {imageData ? (
-            <img className="h-full max-h-40 w-full object-cover object-top " alt={imageData.name} src={imageData.url} />
+            <img className="w-full aspect-video bg-stone-100 object-contain object-top" alt={imageData.name} src={imageData.url} />
           ) : (
-            <ImagePlus className="my-10" />
+            <div className="w-full aspect-video flex bg-stone-100 items-center justify-center">
+              <ImagePlus className="h-1/5 w-1/5" />
+            </div>
           )}
         </Label>
       </Button>
-      <div className="flex flex-col gap-2 p-8 pt-4">
+      <div className="flex flex-col gap-2 p-4 pt-4 text-base ">
         <Input
+          className='text-base border-[1px] border-stone-600 mb-2 placeholder:italic font-alegreya'
           placeholder="Recipe Name"
           value={data.name ?? ''}
           onChange={({ target }) => updateData('name', target.value)}
         />
 
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-4">
           <div className="flex-shrink flex-grow-[2] basis-0">
             <Textarea
-              rows={7}
+              rows={6}
+              className='text-base border-[1px] border-stone-600 font-alegreya placeholder:italic'
               value={data.description ?? ''}
               placeholder="Description"
               onChange={({ target }) => updateData('description', target.value)}
             />
           </div>
-          <div className="flex flex-1 flex-shrink basis-0 flex-col gap-2">
-            <div className="flex flex-row items-center gap-2">
-              Time <Clock3 className="h-4" />
+          <div className="flex flex-1 flex-shrink basis-0 flex-col gap-2 justify-between min-w-[80px]">
+            <div>
+              <div className="flex flex-row items-center font-alegreya gap-1 mb-2">
+                <Clock3 className="h-4" />Time
+              </div>
+
+              <Input
+                type="number"
+                className='text-base font-alegreya border-[1px] border-stone-600'
+                value={data.time ?? ''}
+                onChange={({ target }) => updateData('time', parseInteger(target.value))}
+              />
             </div>
 
-            <Input
-              type="number"
-              value={data.time ?? ''}
-              onChange={({ target }) => updateData('time', parseInteger(target.value))}
-            />
+            <div>
+              <span className="flex flex-row items-center font-alegreya gap-1 mb-2">
+                <Gauge className="h-4" /> Difficulty
+              </span>
 
-            <span className="flex flex-row items-center gap-2">
-              Difficulty
-              <Gauge className="h-4" />
-            </span>
-
-            <Select value={data.difficulty} onValueChange={value => updateData('difficulty', value)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
-              </SelectContent>
-            </Select>
+              <Select value={data.difficulty} 
+                onValueChange={value => updateData('difficulty', value)}>
+                <SelectTrigger className='text-base font-alegreya border-[1px] border-stone-600'>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className='w-fit font-alegreya'>
+                  <SelectItem value="easy">Easy</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="hard">Hard</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
         <Accordion type="multiple">
           <AccordionItem value="ingredients">
-            <AccordionTrigger>Ingredients</AccordionTrigger>
+            <AccordionTrigger className='text-lg font-alegreya font-bold' >Ingredients</AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-col gap-2 p-2">
-                <div className="flex flex-row items-end justify-evenly gap-2">
-                  <div>
-                    <Label htmlFor="amount">Amount</Label>
+              <div className="flex flex-col gap-2 px-4">
+                <div className="flex flex-row items-end justify-evenly gap-3">
+                  <div className='overflow-visible'>
+                    <Label className= "font-alegreya text-base" htmlFor="amount">Amount</Label>
                     <Input
-                      className="w-14"
+                      className="font-alegreya w-14 text-base border-[1px] border-stone-600"
                       id="amount"
                       onChange={({ target }) => setIngredientAmount(target.value)}
                       value={ingredientAmount}
                     />
                   </div>
                   <div className="flex-1">
-                    <Label htmlFor="ingredient">Ingredient</Label>
+                    <Label className= "font-alegreya text-base" htmlFor="ingredient">Ingredient</Label>
                     <Input
+                      className="font-alegreya text-base placeholder:italic border-[1px] border-stone-600"
                       id="ingredient"
                       onChange={({ target }) => setIngredientQuery(target.value)}
                       value={ingredientQuery}
@@ -198,12 +208,12 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                 <Table>
                   <TableBody>
                     {data.ingredients.map((ingredient, index) => (
-                      <TableRow key={index} className="p-0">
-                        <TableCell className="py-2">{ingredient.amount}</TableCell>
-                        <TableCell className="py-2" align="center">
+                      <TableRow key={index} className="p-0 font-alegreya text-base">
+                        <TableCell className="min-w-[56px] p-0 py-2 pl-2">{ingredient.amount}</TableCell>
+                        <TableCell className="w-full p-0 py-2 capitalize pl-6">
                           {ingredient.name}
                         </TableCell>
-                        <TableCell className="py-2" align="right">
+                        <TableCell className="p-0 py-2" align="right">
                           <Button
                             variant="ghost"
                             className="h-full"
@@ -223,51 +233,55 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
               </div>
             </AccordionContent>
           </AccordionItem>
+          <AccordionItem value="nutrients">
+            <AccordionTrigger className='text-lg font-alegreya font-bold'>Nutrients</AccordionTrigger>
+            <AccordionContent className="pt-1 px-4">
+              <div className="flex flex-col">
+                <div className='flex justify-between'>
+                  <Label className='font-alegreya text-base' htmlFor="protein">Proteins</Label>
+                  <div className='font-alegreya text-base' id="protein">
+                    {nutrients.protein.toFixed(2)} g
+                  </div>
+                </div>
+                <div className='flex justify-between'>
+                  <Label className='font-alegreya text-base' htmlFor="calories">Calories</Label>
+                  <div className='font-alegreya text-base' id="calories">
+                    {nutrients.calories.toFixed(2)} kcal
+                  </div>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <div className='pt-6 pb-1 flex flex-row gap-3'>
+            <Label 
+              className = "text-lg font-alegreya font-bold flex items-center align-middle justify-center text-center w-fit" 
+              htmlFor="cost-input break-keep">Cost</Label>
+            <Input
+              id="cost-input"
+              className='border-[1px] border-stone-600 font-alegreya text-base mr-4'
+              type="number"
+              value={data.cost ?? ''}
+              onChange={({ target }) => updateData('cost', parseDecimal(target.value, 2))}
+            />
+          </div>
           <AccordionItem value="instructions">
-            <AccordionTrigger>Instructions</AccordionTrigger>
-            <AccordionContent className="p-2">
+            <AccordionTrigger className='text-lg font-alegreya font-bold'>Instructions</AccordionTrigger>
+            <AccordionContent className="pt-1 px-4">
               <Textarea
+                className="font-alegreya placeholder:italic text-base border-[1px] border-stone-600"
                 placeholder="Write the instructions here..."
                 value={data.instructions}
                 onChange={({ target }) => updateData('instructions', target.value)}
               />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="nutrients">
-            <AccordionTrigger>Nutrients</AccordionTrigger>
-            <AccordionContent className="p-2">
-              <div className="flex flex-row flex-wrap justify-evenly gap-2">
-                <div>
-                  <Label htmlFor="protein">Proteins</Label>
-                  <p className="text-center" id="protein">
-                    {nutrients.protein.toFixed(1)} g
-                  </p>
-                </div>
-                <div>
-                  <Label htmlFor="calories">Calories</Label>
-                  <p className="text-center" id="calories">
-                    {nutrients.calories.toFixed(0)} kcal
-                  </p>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
         </Accordion>
 
-        <div className="flex justify-between gap-2">
-          <div>
-            <Label htmlFor="cost-input">Cost</Label>
-            <Input
-              id="cost-input"
-              type="number"
-              value={data.cost ?? ''}
-              onChange={({ target }) => updateData('cost', parseDecimal(target.value, 2))}
-            />
-          </div>
-          <Button variant="secondary" className="self-end" asChild>
+        <div className="mt-4 mb-6 flex justify-end gap-4">
+          <Button variant="outline" className='w-16' asChild>
             <Link to="../">Cancel</Link>
           </Button>
-          <Button onClick={onSubmit} variant="outline" className="self-end">
+          <Button onClick={onSubmit} className='w-16'>
             Save
           </Button>
         </div>
