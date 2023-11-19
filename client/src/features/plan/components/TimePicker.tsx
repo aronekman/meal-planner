@@ -27,7 +27,7 @@ const TimePicker = ({ time, setTime, close }: TimePickerProps) => {
     close();
   };
   return (
-    <div className="rounded p-2">
+    <div className="rounded p-2 font-alegreya">
       <div className="flex h-14 items-center justify-evenly text-2xl">
         <div>
           <button className={cn(active === 'h' && 'text-primary underline')} onClick={() => setActive('h')}>
