@@ -22,7 +22,7 @@ const PlanSchema = new Schema({
   date: {
     type: Date,
     required: true,
-    expires: 60 * 60 * 24 * 7 //expires after 1 week
+    expires: 60 * 60 * 24 * 7 * 365 //expires after 1 year
   },
   meals: [MealSchema]
 });

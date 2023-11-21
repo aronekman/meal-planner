@@ -149,7 +149,7 @@ export const getRecipes: RequestHandler = async (req, res) => {
 };
 
 export const getSavedRecipes: RequestHandler = async (req, res) => {
-  const recipeIds = req.user?.savedRecipes;
+  const recipeIds = req.user?.saved_recipes;
   const recipes = await Recipe.find({ published: true, _id: { $in: recipeIds } });
 
   res.send(recipes);

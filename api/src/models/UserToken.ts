@@ -6,7 +6,7 @@ const userTokenSchema = new Schema({
     required: true
   },
   token: { type: String, required: true },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now,
     expires: 60 * 60 * 24 // 1 day

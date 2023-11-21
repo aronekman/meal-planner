@@ -1,16 +1,16 @@
 import { InferSchemaType, model, Schema, Types } from 'mongoose';
 
 const UserSchema = new Schema({
-  userName: {
+  username: {
     type: String,
     required: true,
     unique: true
   },
-  passwordHash: {
+  password_hash: {
     type: String,
     required: true
   },
-  savedRecipes: {
+  saved_recipes: {
     type: [{ type: Types.ObjectId, ref: 'Recipe' }],
     default: []
   }

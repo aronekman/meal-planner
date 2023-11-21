@@ -10,21 +10,21 @@ import config from '../utils/config.js';
 export const createUser: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).send('Username and Password are required');
-  if (await User.exists({ userName: username })) {
+  if (await User.exists({ username: username })) {
     res.status(400).send('This username is already reserved');
     return;
   }
   const hash = await bcrypt.hash(password, 10);
-  await User.create({ userName: username, passwordHash: hash });
+  await User.create({ username: username, password_hash: hash });
   return res.status(201).send('User registration succesful');
 };
 
 export const handleLogin: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).send('Username and Password are required');
-  const user = await User.findOne({ userName: username });
+  const user = await User.findOne({ username: username });
   if (!user) return res.status(401).send('Invalid username or password');
-  const passwordCheck = await bcrypt.compare(password, user.passwordHash);
+  const passwordCheck = await bcrypt.compare(password, user.password_hash);
   if (!passwordCheck) return res.status(401).send('Invalid username or password');
   const { accessToken, refreshToken } = await generateTokens(user);
   return res.json({ accessToken, refreshToken });
