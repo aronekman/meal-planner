@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, LogOut } from 'lucide-react';
 
 import { useAppContext } from './common/AppContext';
 import { Button } from './common/components/Button';
@@ -24,23 +24,23 @@ const ApplicationWrapper = () => {
 
   if (isLoading || !isLoggedIn) return null;
   return (
-    <div className="h-[calc(100dvh)] w-screen">
-      <div className="sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2">
+    <div className='h-[calc(100dvh)] w-screen'>
+      <div className='sticky top-0 grid w-full grid-cols-3 justify-between bg-primary p-2'>
         {showBackButton && (
           <Button
             onClick={() => navigate(-1)}
-            variant="link"
-            size="sm"
-            className="justify-self-start text-secondary-foreground">
+            variant='link'
+            size='sm'
+            className='justify-self-start text-secondary-foreground'>
             <ChevronLeft /> Back
           </Button>
         )}
-        <h1 className="col-start-2 my-auto text-center text-lg font-bold text-primary-foreground">Meal Planner</h1>
-        <Button onClick={logout} variant="secondary" size="sm" className="col-start-3 justify-self-end">
-          Log Out
+        <h1 className='col-start-2 my-auto text-center text-lg font-bold text-primary-foreground'>Meal Planner</h1>
+        <Button onClick={logout} size='sm' className='col-start-3 justify-self-end'>
+          <LogOut></LogOut>
         </Button>
       </div>
-      <main className="h-[calc(100%-52px-40px)] overflow-auto">
+      <main className='h-[calc(100%-52px-40px)] overflow-auto'>
         <RecipeProvider>
           <Outlet />
         </RecipeProvider>

@@ -18,7 +18,7 @@ const AccordionTrigger = forwardRef<
   ElementRef<typeof AccordionPrimitive.Trigger>,
   ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
+  <AccordionPrimitive.Header className='flex'>
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
@@ -27,8 +27,8 @@ const AccordionTrigger = forwardRef<
       )}
       {...props}>
       {children}
-      <ChevronDown className="h-4 w-4 transition-transform duration-200 bg-primary rounded-sm 
-        stroke-[3] text-white font-bold" />
+      <ChevronDown className='h-4 w-4 transition-transform duration-200 bg-primary rounded-sm 
+        stroke-[3] text-white font-bold' />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
@@ -45,7 +45,7 @@ const AccordionContent = forwardRef<
       className
     )}
     {...props}>
-    <div className="pb-4 pt-0">{children}</div>
+    <div className='pb-4 pt-0'>{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

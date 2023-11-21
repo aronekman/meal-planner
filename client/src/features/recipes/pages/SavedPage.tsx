@@ -39,8 +39,8 @@ const SavedPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end p-4">
-        <Button onClick={handleUnsave} disabled={!recipe} className='w-20' variant="outline">
+      <div className='mb-6 flex justify-end p-4'>
+        <Button onClick={handleUnsave} disabled={!recipe} className='w-20' variant='outline'>
           Unsave
         </Button>
       </div>

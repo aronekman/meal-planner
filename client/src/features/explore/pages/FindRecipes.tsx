@@ -14,8 +14,8 @@ const FindRecipes = () => {
       recipe.description.trim().toLowerCase().includes(search.trim().toLowerCase())
   );
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <Input value={search} onChange={({ target }) => setSearch(target.value)} placeholder="Search" />
+    <div className='flex flex-col gap-2 p-4'>
+      <Input value={search} onChange={({ target }) => setSearch(target.value)} placeholder='Search' />
       {rows.map(recipe => (
         <RecipeCard key={recipe._id} recipe={recipe} />
       ))}

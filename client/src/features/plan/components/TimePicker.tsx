@@ -27,8 +27,8 @@ const TimePicker = ({ time, setTime, close }: TimePickerProps) => {
     close();
   };
   return (
-    <div className="rounded p-2 font-alegreya">
-      <div className="flex h-14 items-center justify-evenly text-2xl">
+    <div className='rounded p-2 font-alegreya'>
+      <div className='flex h-14 items-center justify-evenly text-2xl'>
         <div>
           <button className={cn(active === 'h' && 'text-primary underline')} onClick={() => setActive('h')}>
             {hour !== null ? pad(hour) : 'hh'}
@@ -39,14 +39,14 @@ const TimePicker = ({ time, setTime, close }: TimePickerProps) => {
           </button>
         </div>
       </div>
-      <div className="relative aspect-square rounded-lg bg-secondary">
+      <div className='relative aspect-square rounded-lg bg-secondary'>
         {active === 'h' &&
           Object.entries(hourData).map(([hour, { rotateRight, rotateLeft }]) => (
             <div
               key={hour}
               className={cn('pointer-events-none absolute flex h-full w-full justify-center p-2', rotateRight)}>
               <Button
-                variant="ghost"
+                variant='ghost'
                 onClick={() => {
                   setHour(parseInt(hour));
                   setMinute(prev => prev ?? 0);
@@ -63,7 +63,7 @@ const TimePicker = ({ time, setTime, close }: TimePickerProps) => {
               key={minute}
               className={cn('pointer-events-none absolute flex h-full w-full justify-center p-2', rotateRight)}>
               <Button
-                variant="ghost"
+                variant='ghost'
                 onClick={() => {
                   setMinute(parseInt(minute));
                 }}
@@ -73,9 +73,9 @@ const TimePicker = ({ time, setTime, close }: TimePickerProps) => {
             </div>
           ))}
       </div>
-      <div className="flex justify-end gap-2 p-2">
+      <div className='flex justify-end gap-2 p-2'>
         <PopoverClose asChild>
-          <Button variant="secondary">Cancel</Button>
+          <Button variant='secondary'>Cancel</Button>
         </PopoverClose>
         <Button onClick={handleSumbit} disabled={hour === null || minute === null}>
           OK

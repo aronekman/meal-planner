@@ -38,28 +38,28 @@ const AddRecipe = () => {
   return (
     <Dialog onOpenChange={open => !open && setRecipeId(null)}>
       <DialogTrigger asChild>
-        <Button className="self-end w-20 justify-self-end">Add</Button>
+        <Button className='self-end w-20 justify-self-end'>Add</Button>
       </DialogTrigger>
-      <DialogContent className="w-[80%] rounded-lg">
-        <div className="flex flex-col gap-2 p-2">
-          <Label htmlFor="recipe" className="flex items-center text-primary font-hand italic text-base">
-            <ChefHat className="mr-2" /> pick recipe
+      <DialogContent className='w-[80%] rounded-lg'>
+        <div className='flex flex-col gap-2 p-2'>
+          <Label htmlFor='recipe' className='flex items-center text-primary font-hand italic text-base'>
+            <ChefHat className='mr-2' /> pick recipe
           </Label>
           <Popover open={recipeOpen} onOpenChange={open => setRecipeOpen(open)}>
             <PopoverTrigger asChild>
               <Button
-                id="recipe"
-                variant="secondary"
-                role="combobox"
+                id='recipe'
+                variant='secondary'
+                role='combobox'
                 aria-expanded={recipeOpen}
-                className="justify-between font-alegreya">
+                className='justify-between font-alegreya'>
                 {recipeId ? options.find(({ _id }) => _id === recipeId)?.name : 'Select Recipe...'}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0 font-alegreya">
+            <PopoverContent className='p-0 font-alegreya'>
               <Command>
-                <CommandInput placeholder="Search recipe..." />
+                <CommandInput placeholder='Search recipe...' />
                 <CommandEmpty>No recipe found.</CommandEmpty>
                 <CommandGroup>
                   {options.map(recipe => (
@@ -78,32 +78,32 @@ const AddRecipe = () => {
               </Command>
             </PopoverContent>
           </Popover>
-          <Label htmlFor="time" className="mt-4 flex items-center text-primary font-hand italic text-base">
-            <CalendarClock className="mr-2" /> pick time
+          <Label htmlFor='time' className='mt-4 flex items-center text-primary font-hand italic text-base'>
+            <CalendarClock className='mr-2' /> pick time
           </Label>
           <Popover open={timeOpen} onOpenChange={open => setTimeOpen(open)}>
-            <PopoverAnchor className="absolute -top-16 left-1/2" />
+            <PopoverAnchor className='absolute -top-16 left-1/2' />
             <PopoverTrigger asChild>
               <Button
-                id="time"
-                variant="secondary"
-                role="combobox"
+                id='time'
+                variant='secondary'
+                role='combobox'
                 aria-expanded={recipeOpen}
-                className="justify-between font-alegreya">
+                className='justify-between font-alegreya'>
                 {timeSlot ? `${timeSlot.hour}:${pad(timeSlot.minute)}` : 'Select Time'}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0">
+            <PopoverContent className='p-0'>
               <TimePicker time={timeSlot} setTime={setTimeSlot} close={() => setTimeOpen(false)} />
             </PopoverContent>
           </Popover>
-          <div className="flex justify-end gap-2 mt-4">
-            <DialogClose className="w-20" asChild>
-              <Button variant="outline">Cancel</Button>
+          <div className='flex justify-end gap-2 mt-4'>
+            <DialogClose className='w-20' asChild>
+              <Button variant='outline'>Cancel</Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button className="w-20" onClick={handleSubmit} disabled={!recipeId || !timeSlot}>
+              <Button className='w-20' onClick={handleSubmit} disabled={!recipeId || !timeSlot}>
                 Add
               </Button>
             </DialogClose>

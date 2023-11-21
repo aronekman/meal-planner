@@ -43,25 +43,25 @@ const Login = () => {
     <div>
       <Background />
       <div
-        className="
+        className='
         absolute left-[50%] top-[50%] flex w-[80%]
         max-w-[300px] translate-x-[-50%]
         translate-y-[-50%]
         flex-col items-center rounded-xl border-[1px]
-        border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">
-        <h1 className="my-8 flex font-alegreya font-semibold text-3xl">Login</h1>
+        border-primary bg-white px-8 drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]'>
+        <h1 className='my-8 flex font-alegreya font-semibold text-3xl'>Login</h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='flex w-full flex-col'>
             <FormField
               control={form.control}
-              name="username"
+              name='username'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Username"
-                      className="text-base border-none bg-stone-100 font-alegreya 
-                        text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      placeholder='Username'
+                      className='text-base border-none bg-stone-100 font-alegreya 
+                        text-orange-400 placeholder:italic placeholder:text-orange-300'
                       {...field}
                     />
                   </FormControl>
@@ -70,33 +70,33 @@ const Login = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
-                      type="password"
-                      placeholder="Password"
-                      className="text-base mt-3 border-none bg-stone-100 
-                        font-alegreya text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      type='password'
+                      placeholder='Password'
+                      className='text-base mt-3 border-none bg-stone-100 
+                        font-alegreya text-orange-400 placeholder:italic placeholder:text-orange-300'
                       {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button variant="link" className="self-end px-0 font-alegreya text-sm">
+            <Button variant='link' className='self-end px-0 font-alegreya text-sm'>
               Forgot password?
             </Button>
-            <Button className="text-base" type="submit">Login</Button>
+            <Button className='text-base' type='submit'>Login</Button>
           </form>
         </Form>
-        <hr className="my-3 w-full border-[1px] border-black"></hr>
-        <GoogleOAuthProvider clientId="454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com">
+        <hr className='my-3 w-full border-[1px] border-black'></hr>
+        <GoogleOAuthProvider clientId='454433122172-je51gqttlseec0u50h0mdt0vopjjudhq.apps.googleusercontent.com'>
           <GoogleLoginButton/>
         </GoogleOAuthProvider>
-        <Button asChild variant="link" className="my-2 font-alegreya text-orange-400 h-fit">
-          <Link to="/register">No account? Sign Up!</Link>
+        <Button asChild variant='link' className='my-2 font-alegreya text-orange-400 h-fit'>
+          <Link to='/register'>No account? Sign Up!</Link>
         </Button>
       </div>
     </div>

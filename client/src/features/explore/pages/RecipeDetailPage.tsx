@@ -52,9 +52,9 @@ const RecipeDetailPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end p-4">
+      <div className='mb-6 flex justify-end p-4'>
         {isSaved ? (
-          <Button variant="outline" onClick={handleUnSave}>
+          <Button variant='outline' onClick={handleUnSave}>
             Unsave
           </Button>
         ) : (

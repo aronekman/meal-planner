@@ -39,7 +39,7 @@ const NavLink = ({ to, children }: NavLinkProps) => {
   return (
     <Link
       to={to}
-      className={cn('text-center font-sans font-bold text-white underline-offset-2', isActive && 'text-primary underline')}>
+      className={cn('text-center font-alegreya font-bold text-white underline-offset-2', isActive && 'text-primary underline')}>
       {children}
     </Link>
   );

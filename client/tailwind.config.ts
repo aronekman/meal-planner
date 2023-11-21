@@ -67,7 +67,6 @@ export default {
       },
       fontFamily: {
         alegreya : ['Alegreya', 'serif'],
-        arbutus: ['Arbutus Slab', 'sans-serif'],
         hand: ['Gochi Hand', 'cursive']
       }
     }

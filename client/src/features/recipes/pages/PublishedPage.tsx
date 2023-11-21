@@ -46,11 +46,11 @@ const PublishedPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end gap-6 p-4">
-        <Button className='w-20' variant="secondary" onClick={handleDelete} disabled={!recipe}>
+      <div className='mb-6 flex justify-end gap-6 p-4'>
+        <Button className='w-20' variant='secondary' onClick={handleDelete} disabled={!recipe}>
           Delete
         </Button>
-        <Button className='w-20' onClick={handleUnPublish} disabled={!recipe} variant="outline">
+        <Button className='w-20' onClick={handleUnPublish} disabled={!recipe} variant='outline'>
           Unpublish
         </Button>
       </div>

@@ -46,11 +46,11 @@ const DraftPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className="mb-6 flex justify-end gap-4 p-4">
-        <Button variant="secondary" onClick={handleDelete} className='w-20' disabled={!recipe}>
+      <div className='mb-6 flex justify-end gap-4 p-4'>
+        <Button variant='secondary' onClick={handleDelete} className='w-20' disabled={!recipe}>
           Delete
         </Button>
-        <Button variant="outline" disabled={!recipe} className='w-20' asChild>
+        <Button variant='outline' disabled={!recipe} className='w-20' asChild>
           <Link to={`/recipes/${recipe._id}/edit`}>Edit</Link>
         </Button>
         <Button onClick={handlePublish} className='w-20' disabled={!recipe}>

@@ -59,7 +59,7 @@ const router = createBrowserRouter([
           }
         ]
       }
-      /* { path: '*', element: <Navigate to="/" /> } */
+      /* { path: '*', element: <Navigate to='/' /> } */
     ]
   }
 ]);
