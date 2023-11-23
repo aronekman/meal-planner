@@ -47,11 +47,6 @@ const router = createBrowserRouter([
           },
           {
             path: 'explore',
-            element: (
-              <ExploreProvider>
-                <Outlet />
-              </ExploreProvider>
-            ),
             children: [
               { index: true, element: <FindRecipes /> },
               { path: ':id', element: <RecipeDetailPage /> }

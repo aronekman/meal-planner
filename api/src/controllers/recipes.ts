@@ -122,8 +122,8 @@ export const getRecipes: RequestHandler = async (req, res) => {
   const difficulty = req.query.difficulty;
   const costLimit = req.query.costLimit;
 
-  let recipes = await Recipe.find({ published: true, created_by: { $nin: req.user?._id }}).sort('-published_at');
-  recipes = recipes.filter((recipe) => {
+  let recipes = await Recipe.find({ published: true, created_by: { $nin: req.user?._id } }).sort('-published_at');
+  recipes = recipes.filter(recipe => {
     let valid = true;
     if (searchPhrase) {
       valid = valid && recipe.name.toLowerCase().includes(searchPhrase.toString().toLowerCase());

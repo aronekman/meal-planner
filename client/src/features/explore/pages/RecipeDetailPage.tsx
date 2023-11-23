@@ -14,7 +14,7 @@ const RecipeDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setAppData } = useAppContext();
-  const { loaded, recipes } = useExploreContext();
+  const { status, recipes, getData } = useExploreContext();
   const { saved, saveRecipe, unSaveRecipe } = useRecipeContext();
 
   const recipe = recipes.find(recipe => recipe._id === id);
@@ -30,9 +30,13 @@ const RecipeDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (loaded && !recipe) navigate('../');
+    if (status === 'idle') {
+      getData();
+      return;
+    }
+    if (status === 'succeeded' && !recipe) navigate('../');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, recipe]);
+  }, [status, recipe]);
 
   const handleSave = async () => {
     if (!recipe) return;
@@ -52,9 +56,9 @@ const RecipeDetailPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className='mb-6 flex justify-end p-4'>
+      <div className="mb-6 flex justify-end p-4">
         {isSaved ? (
-          <Button variant='outline' onClick={handleUnSave}>
+          <Button variant="outline" onClick={handleUnSave}>
             Unsave
           </Button>
         ) : (
