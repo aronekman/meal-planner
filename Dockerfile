@@ -14,12 +14,3 @@ COPY --from=builder /app/dist /app/build/dist
 EXPOSE 8080
 CMD [ "node", "build/index.js" ]
 
-
-#FROM node:18-alpine
-#WORKDIR /usr/src/app
-#COPY package*.json ./
-#COPY --from=build-image ./usr/src/app/dist ./dist
-#RUN npm ci --production
-#COPY . .
-#EXPOSE 8080
-#CMD [ "node", "dist/application.js" ]

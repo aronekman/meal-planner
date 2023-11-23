@@ -3,12 +3,12 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
-  // base: '/client/'
-});
+  base: mode === 'production' ? '/client/' : './'
+}));
