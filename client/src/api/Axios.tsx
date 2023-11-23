@@ -18,6 +18,7 @@ const AxiosWrapper = ({ children }: { children: ReactNode }) => {
       }
       return config;
     };
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const responseErrorHandler = async (error: any) => {
       if (!axios.isCancel(error) && axios.isAxiosError(error) && error.response?.status === 401) {
