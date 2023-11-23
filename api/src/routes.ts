@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication.js';
+import { getIngredient } from './controllers/Ingredient.js';
 import { addMeal, deleteMeal, getPlan } from './controllers/plans.js';
 import {
   createRecipe,
@@ -41,4 +42,6 @@ router.get('/recipes/published', AuthMiddleware, getPublishedRecipes);
 router.get('/plans', AuthMiddleware, getPlan);
 router.post('/meals', AuthMiddleware, addMeal);
 router.delete('/meals', AuthMiddleware, deleteMeal);
+
+router.get('/ingredient', AuthMiddleware, getIngredient);
 export default router;

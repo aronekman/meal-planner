@@ -5,5 +5,6 @@ export default {
   atSecret: process.env.ACCESS_TOKEN_SECRET ?? '',
   rtSecret: process.env.REFRESH_TOKEN_SECRET ?? '',
   atLifeTime: process.env.ACCESS_TOKEN_LIFETIME ?? '10m',
-  rtLifeTime: process.env.REFRESH_TOKEN_LIFETIME ?? '1d'
+  rtLifeTime: process.env.REFRESH_TOKEN_LIFETIME ?? '1d',
+  apiNinjasKey: process.env.API_NINJAS_KEY ?? ''
 } as const;
