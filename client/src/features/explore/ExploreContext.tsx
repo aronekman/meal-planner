@@ -40,11 +40,7 @@ const ExploreProvider = ({ children }: { children: ReactNode }) => {
     setStatus('succeeded');
   };
 
-  const contextValue = useMemo(
-    () => ({ recipes, status, getData }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [recipes, status]
-  );
+  const contextValue = useMemo(() => ({ recipes, status, getData }), [recipes, status]);
 
   return <ExploreContext.Provider value={contextValue}>{children}</ExploreContext.Provider>;
 };
