@@ -20,8 +20,6 @@ app.use('/api', router);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-console.log(path.join(__dirname, 'dist'));
-
 app.use('/uploads', express.static('uploads'));
 app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
