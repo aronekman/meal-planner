@@ -132,6 +132,7 @@
 
 
 **/db_data
+**/uploads/**/*
 **/uploads
 **/build
 
