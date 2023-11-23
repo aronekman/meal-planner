@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useAppContext } from '@/common/AppContext';
 import { Button } from '@/common/components/Button';
@@ -46,11 +46,14 @@ const PublishedPage = () => {
   return (
     <div>
       <RecipeDetails recipe={recipe} />
-      <div className='mb-6 flex justify-end gap-6 p-4'>
-        <Button className='w-20' variant='secondary' onClick={handleDelete} disabled={!recipe}>
+      <div className="mb-6 flex justify-end gap-6 p-4">
+        <Button className="w-20" variant="secondary" onClick={handleDelete} disabled={!recipe}>
           Delete
         </Button>
-        <Button className='w-20' onClick={handleUnPublish} disabled={!recipe} variant='outline'>
+        <Button variant="outline" disabled={!recipe} className="w-20" asChild>
+          <Link to={`/recipes/published/${recipe._id}/edit`}>Edit</Link>
+        </Button>
+        <Button className="w-20" onClick={handleUnPublish} disabled={!recipe} variant="outline">
           Unpublish
         </Button>
       </div>

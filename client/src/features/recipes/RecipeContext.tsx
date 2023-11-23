@@ -21,7 +21,7 @@ type RecipeState = {
   loaded: boolean;
   getData: () => Promise<void>;
   createRecipe: (recipe: RecipeRequest) => Promise<void>;
-  updateRecipe: (recipe: RecipeRequest, id: string) => Promise<void>;
+  updateRecipe: (recipe: RecipeRequest, id: string, published?: boolean) => Promise<void>;
   deleteRecipe: (recipe: Recipe) => Promise<void>;
   publishRecipe: (recipe: Recipe) => Promise<void>;
   unPublishRecipe: (recipe: Recipe) => Promise<void>;
@@ -76,11 +76,15 @@ const RecipeProvider = ({ children }: { children: ReactNode }) => {
     setDrafts(prevState => [...prevState, RecipeSchema.parse(data)]);
   };
 
-  const updateRecipe = async (recipe: RecipeRequest, id: string) => {
+  const updateRecipe = async (recipe: RecipeRequest, id: string, published: boolean = false) => {
     const { data } = await apiClient.put(`/recipes?id=${id}`, recipe, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-    setDrafts(prevState => prevState.map(draft => (draft._id === data._id ? RecipeSchema.parse(data) : draft)));
+    if (published) {
+      setPublished(prevState => prevState.map(recipe => (recipe._id === data._id ? RecipeSchema.parse(data) : recipe)));
+    } else {
+      setDrafts(prevState => prevState.map(recipe => (recipe._id === data._id ? RecipeSchema.parse(data) : recipe)));
+    }
   };
 
   const deleteRecipe = async (recipe: Recipe) => {

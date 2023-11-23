@@ -39,6 +39,7 @@ const router = createBrowserRouter([
               { index: true, element: <MyRecipes /> },
               { path: 'create', element: <CreateRecipe /> },
               { path: ':id/edit', element: <EditRecipe /> },
+              { path: 'published/:id/edit', element: <EditRecipe /> },
               { path: ':id/draft', element: <DraftPage /> },
               { path: ':id/published', element: <PublishedPage /> },
               { path: ':id/saved', element: <SavedPage /> }

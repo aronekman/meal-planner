@@ -1,4 +1,4 @@
-import { Clock3, Gauge, ImagePlus } from 'lucide-react';
+import { Clock3, Gauge, ImageOff } from 'lucide-react';
 
 import { Table, TableBody, TableCell, TableRow } from '@/common/components/Table';
 import config from '@/config';
@@ -19,55 +19,54 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
     }
   );
   return (
-    <div className='flex w-full flex-col'>
-      <h1 className='py-5 px-10 text-center text-2xl font-alegreya font-bold capitalize'>{name}</h1>
+    <div className="flex w-full flex-col">
+      <h1 className="px-10 py-5 text-center font-alegreya text-2xl font-bold capitalize">{name}</h1>
       {image ? (
         <img
-          className='w-full aspect-video bg-stone-100 object-contain object-top '
+          className="aspect-video w-full bg-stone-100 object-contain object-top "
           src={`${config.baseUrl}/uploads/${image}`}
         />
-      ): (
-        <div className='w-full aspect-video flex bg-stone-100 items-center justify-center'>
-          <ImagePlus className='h-1/5 w-1/5' />
+      ) : (
+        <div className="flex aspect-video w-full items-center justify-center bg-stone-100">
+          <ImageOff className="h-1/5 w-1/5" />
         </div>
       )}
-      <div className='flex flex-col gap-2 p-4'>
-        <div className='w-full flex'>
-          <span className='w-[70%] border-r-[1px] border-black pr-3
-            font-alegreya text-base'>
-            {description ? (
-              <div>{description}</div>
-            ): (
-              <div className='italic text-stone-600'>Some description...</div>
-            )}
+      <div className="flex flex-col gap-2 p-4">
+        <div className="flex w-full">
+          <span
+            className="w-[70%] border-r-[1px] border-black pr-3
+            font-alegreya text-base">
+            {description ? <div>{description}</div> : <div className="italic text-stone-600">Some description...</div>}
           </span>
-          <div className='w-[30%] grid gap-2 pl-3 pt-[2px] h-fit'>
-            <div className='flex h-fit flex-row items-center text-sm font-medium italic overflow-visible'>
-              <Clock3 className = 'h-4 aspect-square'/>
-              <span className = 'mx-2'>{time ?? '--'} ms</span>
+          <div className="grid h-fit w-[30%] gap-2 pl-3 pt-[2px]">
+            <div className="flex h-fit flex-row items-center overflow-visible text-sm font-medium italic">
+              <Clock3 className="aspect-square h-4" />
+              <span className="mx-2">{time ?? '--'} ms</span>
             </div>
-            <div className=' flex h-4 flex-row items-center text-sm font-medium italic'>
-              <Gauge className = 'h-full aspect-square' />
-              <span className = 'mx-2'>{difficulty ?? '--'}</span>
+            <div className=" flex h-4 flex-row items-center text-sm font-medium italic">
+              <Gauge className="aspect-square h-full" />
+              <span className="mx-2">{difficulty ?? '--'}</span>
             </div>
           </div>
         </div>
-        <h2 className='text-xl font-alegreya font-bold mt-6 mb-1'>Ingredients</h2>
+        <h2 className="mb-1 mt-6 font-alegreya text-xl font-bold">Ingredients</h2>
         {ingredients.length !== 0 ? (
           <Table>
             <colgroup>
-              <col span={1} className='w-[70%]'/>
-              <col span={1} className='w-[30%]'/>
+              <col span={1} className="w-[70%]" />
+              <col span={1} className="w-[30%]" />
             </colgroup>
             <TableBody>
               {ingredients.map((ingredient, index) => (
-                <TableRow key={index} className='p-0 whitespace-nowrap 
-                  font-alegreya text-base
-                  hover:bg-white border-stone-100 border-b-2'>
-                  <TableCell className='pl-2 py-2 capitalize bg-stone-100' align='left'>
+                <TableRow
+                  key={index}
+                  className="whitespace-nowrap border-b-2 
+                  border-stone-100 p-0
+                  font-alegreya text-base hover:bg-white">
+                  <TableCell className="bg-stone-100 py-2 pl-2 capitalize" align="left">
                     {ingredient.name}
                   </TableCell>
-                  <TableCell className='py-2' align='left'>
+                  <TableCell className="py-2" align="left">
                     {ingredient.amount}
                   </TableCell>
                 </TableRow>
@@ -75,28 +74,30 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
             </TableBody>
           </Table>
         ) : (
-          <div className='italic text-stone-600 font-alegreya'>Some ingredients...</div>
+          <div className="font-alegreya italic text-stone-600">Some ingredients...</div>
         )}
-      
-        <div className='w-full border-black border-b-[1px]'>
-          <div className='text-base font-alegreya font-bold pt-5 pb-2 border-black border-b-[1px]'>Nutrients</div>
-          <div className='w-full flex justify-between'>
-            <div className='text-base font-alegreya pl-2 pt-2'>Protein</div>
-            <div className='text-base font-alegreya w-[30%] pl-4'>{nutrients.protein.toFixed(2)} g</div>
+
+        <div className="w-full border-b-[1px] border-black">
+          <div className="border-b-[1px] border-black pb-2 pt-5 font-alegreya text-base font-bold">Nutrients</div>
+          <div className="flex w-full justify-between">
+            <div className="pl-2 pt-2 font-alegreya text-base">Protein</div>
+            <div className="w-[30%] pl-4 font-alegreya text-base">{nutrients.protein.toFixed(2)} g</div>
           </div>
-          <div className='w-full flex justify-between'>
-            <div className='text-base font-alegreya pl-2'>Calories</div>
-            <div className='text-base font-alegreya w-[30%] pl-4 pb-2'>{nutrients.calories.toFixed(2)} kcal</div>
+          <div className="flex w-full justify-between">
+            <div className="pl-2 font-alegreya text-base">Calories</div>
+            <div className="w-[30%] pb-2 pl-4 font-alegreya text-base">{nutrients.calories.toFixed(2)} kcal</div>
           </div>
         </div>
-        <div className='w-full flex justify-between border-black border-b-[1px]'>
-          <div className='text-base font-alegreya font-bold pb-2'>Estimated Cost</div>
-          <div className='text-base font-alegreya font-bold pb-2 w-[30%] pl-4'>{cost} €</div>
+        <div className="flex w-full justify-between border-b-[1px] border-black">
+          <div className="pb-2 font-alegreya text-base font-bold">Estimated Cost</div>
+          <div className="w-[30%] pb-2 pl-4 font-alegreya text-base font-bold">{cost} €</div>
         </div>
-        <h2 className='text-xl font-alegreya font-bold mt-6 mb-1'>Instructions</h2>
+        <h2 className="mb-1 mt-6 font-alegreya text-xl font-bold">Instructions</h2>
         {instructions ? (
-          <span className='whitespace-pre-line font-alegreya break-words'>{instructions}</span>
-        ) : (<div className='italic text-stone-600 font-alegreya'>Some instructions...</div>)}
+          <span className="whitespace-pre-line break-words font-alegreya">{instructions}</span>
+        ) : (
+          <div className="font-alegreya italic text-stone-600">Some instructions...</div>
+        )}
       </div>
     </div>
   );

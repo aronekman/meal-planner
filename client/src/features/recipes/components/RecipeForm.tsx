@@ -62,15 +62,6 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
     }
   }, [recipe]);
 
-  useEffect(() => {
-    if (recipe) return;
-    if (!data.image) {
-      setImageData(null);
-    } else {
-      setImageData({ name: data.image.name, url: URL.createObjectURL(data.image) });
-    }
-  }, [data.image, recipe]);
-
   const onSubmit = async () => {
     try {
       const payload = RecipeRequestSchema.parse(data);
@@ -112,7 +103,14 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
         className="hidden"
         accept="image/*"
         onChange={({ target }) => {
-          target.files && updateData('image', target.files.item(0));
+          console.log(target.files && 'je');
+          const image = target.files?.item(0);
+          if (image) {
+            updateData('image', image);
+            setImageData({ name: image.name, url: URL.createObjectURL(image) });
+          } else {
+            setImageData(null);
+          }
           target.value = '';
         }}
       />
