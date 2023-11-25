@@ -3,7 +3,6 @@ import { InferSchemaType, model, Schema, Types } from 'mongoose';
 const MealSchema = new Schema({
   time_slot: {
     type: Date,
-    required: true
   },
 
   recipe: {

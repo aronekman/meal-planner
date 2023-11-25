@@ -25,6 +25,8 @@ export const getPlan: RequestHandler = async (req, res) => {
     return res.status(200).send(newPlan);
   }
   plan.meals.sort((meal1, meal2) => {
+    if (!meal1.time_slot) return 1;
+    if (!meal2.time_slot) return -1;
     return meal1.time_slot < meal2.time_slot ? -1 : meal1.time_slot > meal2.time_slot ? 1 : 0;
   });
   res.status(200).send(plan);
