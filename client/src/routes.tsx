@@ -8,11 +8,9 @@ import RecipeDetailPage from './features/explore/pages/RecipeDetailPage';
 import HomePage from './features/plan/HomePage';
 import { PlanProvider } from './features/plan/PlanContext';
 import CreateRecipe from './features/recipes/pages/CreateRecipe';
-import DraftPage from './features/recipes/pages/DraftPage';
 import EditRecipe from './features/recipes/pages/EditRecipe';
 import MyRecipes from './features/recipes/pages/MyRecipes';
-import PublishedPage from './features/recipes/pages/PublishedPage';
-import SavedPage from './features/recipes/pages/SavedPage';
+import RecipePage from './features/recipes/pages/RecipePage';
 import ApplicationWrapper from './App';
 
 const router = createBrowserRouter([
@@ -40,9 +38,7 @@ const router = createBrowserRouter([
               { path: 'create', element: <CreateRecipe /> },
               { path: ':id/edit', element: <EditRecipe /> },
               { path: 'published/:id/edit', element: <EditRecipe /> },
-              { path: ':id/draft', element: <DraftPage /> },
-              { path: ':id/published', element: <PublishedPage /> },
-              { path: ':id/saved', element: <SavedPage /> }
+              { path: ':id', element: <RecipePage /> }
             ]
           },
           {

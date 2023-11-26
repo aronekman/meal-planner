@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { matchPath, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppContext } from '@/common/AppContext';
 
@@ -12,9 +12,12 @@ const EditRecipe = () => {
   const { drafts, published, loaded, updateRecipe } = useRecipeContext();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const isPublished = Boolean(matchPath('/recipes/published/*', pathname));
-  const recipe = (isPublished ? published : drafts).find(recipe => recipe._id === id);
+  let isPublished = true;
+  let recipe = published.find(recipe => recipe._id === id);
+  if (!recipe) {
+    recipe = drafts.find(recipe => recipe._id === id);
+    isPublished = false
+  }
   useEffect(() => {
     setAppData({ showBackButton: true });
     return () => {
@@ -30,7 +33,7 @@ const EditRecipe = () => {
 
   return (
     <div>
-      <RecipeForm recipe={recipe} handleSubmit={data => updateRecipe(data, recipe._id, isPublished)} />
+      {recipe && <RecipeForm recipe={recipe} handleSubmit={data => updateRecipe(data, recipe ? recipe._id : "", isPublished)} />}
     </div>
   );
 };

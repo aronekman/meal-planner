@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { addHours, format } from 'date-fns';
 import { ImageOff, X } from 'lucide-react';
 
@@ -8,6 +9,7 @@ import { usePlanContext } from '../PlanContext';
 
 const PlanList = () => {
   const { plan, deleteMeal } = usePlanContext();
+  const navigate = useNavigate();
   if (!plan) return null;
 
   const handleDelete = async (id: string) => {
@@ -21,7 +23,9 @@ const PlanList = () => {
             <line x1='50%' y1='0' x2='50%' y2='100%' strokeWidth='3' />
             <circle cx='50%' cy='50%' r='5' />
           </svg>
-          <div className='flex h-full w-full items-center px-2'>
+          <div 
+            onClick={() => navigate(`recipes/${meal.recipe._id}`)} 
+            className='flex h-full w-full items-center px-2'>
             <div className='h-[80%] aspect-[5/4] overflow-clip bg-[#F0F0F0] p-1'>
               {meal.recipe.image ? (
                 <div className='h-full w-full'>

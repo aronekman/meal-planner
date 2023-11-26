@@ -29,7 +29,7 @@ const MyRecipes = () => {
               md:grid-cols-4
               lg:grid-cols-5'>
               {drafts.map(recipe => (
-                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}/draft`)} />
+                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}`)} />
               ))}
             </div>
           </AccordionContent>
@@ -43,7 +43,7 @@ const MyRecipes = () => {
               md:grid-cols-4
               lg:grid-cols-5'>
               {published.map(recipe => (
-                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}/published`)} />
+                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}`)} />
               ))}
             </div>
           </AccordionContent>
@@ -57,7 +57,7 @@ const MyRecipes = () => {
               md:grid-cols-4
               lg:grid-cols-5'>
               {saved.map(recipe => (
-                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}/saved`)} />
+                <RecipeIcon key={recipe._id} recipe={recipe} onClick={() => navigate(`${recipe._id}`)} />
               ))}
             </div>
           </AccordionContent>
