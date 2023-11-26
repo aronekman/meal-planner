@@ -42,8 +42,8 @@ const AddRecipe = () => {
       </DialogTrigger>
       <DialogContent className='w-[80%] rounded-lg'>
         <div className='flex flex-col gap-2 p-2'>
-          <Label htmlFor='recipe' className='flex items-center text-primary font-hand italic text-base'>
-            <ChefHat className='mr-2' /> pick recipe
+          <Label htmlFor='recipe' className='flex items-center text-primary font-alegreya italic text-base'>
+            <ChefHat className='mr-2' /> Pick recipe
           </Label>
           <Popover open={recipeOpen} onOpenChange={open => setRecipeOpen(open)}>
             <PopoverTrigger asChild>
@@ -78,8 +78,8 @@ const AddRecipe = () => {
               </Command>
             </PopoverContent>
           </Popover>
-          <Label htmlFor='time' className='mt-4 flex items-center text-primary font-hand italic text-base'>
-            <CalendarClock className='mr-2' /> pick time
+          <Label htmlFor='time' className='mt-4 flex items-center text-primary font-alegreya italic text-base'>
+            <CalendarClock className='mr-2' /> Pick time
           </Label>
           <Popover open={timeOpen} onOpenChange={open => setTimeOpen(open)}>
             <PopoverAnchor className='absolute -top-16 left-1/2' />

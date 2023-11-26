@@ -113,7 +113,7 @@ const Register = () => {
         <Button asChild variant="link" className="my-2 h-fit text-center font-alegreya text-orange-400 ">
           <Link to="/login">Already have an account? Login!</Link>
         </Button>
-      </div>
+      </div>  
     </div>
   );
 };

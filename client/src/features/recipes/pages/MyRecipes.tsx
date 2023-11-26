@@ -19,7 +19,7 @@ const MyRecipes = () => {
           <Plus className='h-full text-white'></Plus>
         </Link>
       </Button>
-      <Accordion type='multiple'>
+      <Accordion type='multiple' defaultValue={['drafts', 'published', 'saved']}>
         <AccordionItem value='drafts' className='overflow-visible'>
           <AccordionTrigger className='font-hand text-2xl'>Drafted Recipes</AccordionTrigger>
           <AccordionContent>

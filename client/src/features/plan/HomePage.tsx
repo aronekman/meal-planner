@@ -31,13 +31,13 @@ const HomePage = () => {
       <Background />
       <div className='flex flex-col gap-4 p-2 px-4 pt-6'>
         <div className='flex h-24 flex-col rounded-lg border border-primary bg-white p-1'>
-          <p className='text-center text-base font-alegreya underline'>Current bill</p>
+          <p className='text-center text-xl font-hand underline'>Current bill</p>
           <div className='flex h-full items-center justify-center pb-2'>
             <span className='my-auto text-4xl font-alegreya font-bold'>{summary && `${summary.cost.toFixed(2)}€`} </span>
           </div>
         </div>
         <div className='flex h-24 flex-col rounded-lg bg-gray-600 bg-opacity-50 p-1'>
-          <p className='text-center text-base font-alegreya underline text-white'>Nutrients intake</p>
+          <p className='text-center text-xl font-hand text-white underline'>Nutrient intakes</p>
           <div className='flex flex-col h-full py-2 px-10 justify-center text-base font-alegreya'>
             <div className='flex justify-between'>
               <span className='text-white'>Protein</span>
@@ -45,7 +45,7 @@ const HomePage = () => {
             </div>
             <div className='flex justify-between'>
               <span className='text-white'>Calories</span>
-              <span className='text-white'>{summary ? summary.calories.toFixed(2) : 0.00}g</span>
+              <span className='text-white'>{summary ? summary.calories.toFixed(2) : 0.00}kcal</span>
             </div>
           </div>
         </div>
