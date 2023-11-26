@@ -67,7 +67,7 @@ export default {
       },
       fontFamily: {
         alegreya : ['Alegreya', 'serif'],
-        hand: ['Gochi Hand', 'cursive']
+        hand: ['La Belle Aurore', 'cursive']
       }
     }
   },
