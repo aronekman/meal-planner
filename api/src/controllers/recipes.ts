@@ -122,7 +122,10 @@ export const getRecipes: RequestHandler = async (req, res) => {
   const difficulty = req.query.difficulty;
   const costLimit = req.query.costLimit;
 
-  let recipes = await Recipe.find({ published: true, created_by: { $nin: req.user?._id } }).sort('-published_at');
+  let recipes = await Recipe
+    .find({ published: true, created_by: { $nin: req.user?._id } })
+    .sort('-published_at')
+    .populate('created_by', 'username');
   recipes = recipes.filter(recipe => {
     let valid = true;
     if (searchPhrase) {
@@ -150,17 +153,22 @@ export const getRecipes: RequestHandler = async (req, res) => {
 
 export const getSavedRecipes: RequestHandler = async (req, res) => {
   const recipeIds = req.user?.saved_recipes;
-  const recipes = await Recipe.find({ published: true, _id: { $in: recipeIds } });
-
+  const recipes = await Recipe
+    .find({ published: true, _id: { $in: recipeIds } })
+    .populate('created_by', 'username');
   res.send(recipes);
 };
 
 export const getDraftedRecipes: RequestHandler = async (req, res) => {
-  const recipes = await Recipe.find({ published: false, created_by: req.user?._id });
+  const recipes = await Recipe
+    .find({ published: false, created_by: req.user?._id })
+    .populate('created_by', 'username');
   res.send(recipes);
 };
 
 export const getPublishedRecipes: RequestHandler = async (req, res) => {
-  const recipes = await Recipe.find({ published: true, created_by: req.user?._id });
+  const recipes = await Recipe
+    .find({ published: true, created_by: req.user?._id })
+    .populate('created_by', 'username');
   res.send(recipes);
 };

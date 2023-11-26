@@ -10,7 +10,7 @@ type RecipeDetailsProps = {
 };
 
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
-  const { name, image, time, difficulty, description, ingredients, instructions, cost } = recipe;
+  const { name, image, time, difficulty, description, ingredients, instructions, cost, created_by } = recipe;
   const nutrients = recipe.ingredients.reduce(
     (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
     {
@@ -38,7 +38,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
             font-alegreya text-base">
             {description ? <div>{description}</div> : <div className="italic text-stone-600">Some description...</div>}
           </span>
-          <div className="grid h-fit w-[30%] gap-2 pl-3 pt-[2px]">
+          <div className="grid h-fit w-[30%] gap-2 pl-3 pt-[2px] font-alegreya">
             <div className="flex h-fit flex-row items-center overflow-visible text-sm font-medium italic">
               <Clock3 className="aspect-square h-4" />
               <span className="mx-2">{time ?? '--'} ms</span>
@@ -49,6 +49,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
             </div>
           </div>
         </div>
+        <div className="text-right font-alegreya mb-2">Published by <span className="font-semibold">{created_by.username}</span></div>
         <h2 className="mb-1 mt-6 font-alegreya text-xl font-bold">Ingredients</h2>
         {ingredients.length !== 0 ? (
           <Table>

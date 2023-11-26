@@ -10,7 +10,11 @@ export const RecipeSchema = RecipeRequestSchema.extend({
   image: z.string().optional(),
   _id: z.string(),
   time: z.number().int().optional(),
-  cost: z.number().optional().default(0)
+  cost: z.number().optional().default(0),
+  created_by: z.object({
+    username : z.string(),
+    _id: z.string()
+  })
 });
 export type Recipe = z.infer<typeof RecipeSchema>;
 
