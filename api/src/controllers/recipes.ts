@@ -5,6 +5,7 @@ import User from '../models/User.js';
 
 export const createRecipe: RequestHandler = async (req, res) => {
   const recipe = await Recipe.create({ ...req.body, created_by: req.user?._id, image: req.file?.filename });
+  await recipe.populate('created_by', 'username');
   res.status(201).send(recipe);
 };
 
@@ -25,6 +26,7 @@ export const modifyRecipe: RequestHandler = async (req, res) => {
     { ...req.body, image: req.file?.filename },
     { new: true }
   );
+  await updatedRecipe?.populate('created_by', 'username');
   res.status(201).send(updatedRecipe);
 };
 
@@ -59,6 +61,7 @@ export const publishRecipe: RequestHandler = async (req, res) => {
   recipe.published = true;
   recipe.published_at = new Date();
   await recipe.save();
+  await recipe.populate('created_by', 'username');
   res.status(200).send(recipe);
 };
 
@@ -77,6 +80,7 @@ export const unpublishRecipe: RequestHandler = async (req, res) => {
   recipe.published = false;
   recipe.published_at = undefined;
   await recipe.save();
+  await recipe.populate('created_by', 'username');
   res.status(200).send(recipe);
 };
 
@@ -85,7 +89,7 @@ export const saveRecipe: RequestHandler = async (req, res) => {
   if (!recipeId) {
     return res.status(400).send('Id of recipe not specified');
   }
-  const recipe = await Recipe.findById(recipeId);
+  const recipe = await Recipe.findById(recipeId).populate('created_by', 'username');
   if (!recipe) {
     return res.status(404).json({ error: 'Recipe Id not found' });
   }
@@ -103,7 +107,7 @@ export const unsaveRecipe: RequestHandler = async (req, res) => {
   if (!recipeId) {
     return res.status(400).send('Id of recipe not specified');
   }
-  const recipe = await Recipe.findById(recipeId);
+  const recipe = await Recipe.findById(recipeId).populate('created_by', 'username');
   if (!recipe) {
     return res.status(404).json({ error: 'Recipe Id not found' });
   }
