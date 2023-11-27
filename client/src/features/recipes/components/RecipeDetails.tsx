@@ -20,7 +20,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   );
   return (
     <div className="flex w-full flex-col">
-      <h1 className="px-10 py-5 text-center font-alegreya text-2xl font-bold capitalize">{name}</h1>
+      <h1 className="mx-10 py-5 text-center font-alegreya text-2xl font-bold capitalize break-words">{name}</h1>
       {image ? (
         <img
           className="aspect-video w-full bg-stone-100 object-contain object-top "
@@ -32,6 +32,8 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
         </div>
       )}
       <div className="flex flex-col gap-2 p-4">
+      <div className="text-center font-alegreya mb-2">Published by <span className="font-semibold">{created_by.username}</span></div>
+        
         <div className="flex w-full">
           <span
             className="w-[70%] border-r-[1px] border-black pr-3
@@ -49,7 +51,6 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
             </div>
           </div>
         </div>
-        <div className="text-right font-alegreya mb-2">Published by <span className="font-semibold">{created_by.username}</span></div>
         <h2 className="mb-1 mt-6 font-alegreya text-xl font-bold">Ingredients</h2>
         {ingredients.length !== 0 ? (
           <Table>

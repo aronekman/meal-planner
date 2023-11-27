@@ -13,11 +13,11 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
   const navigate = useNavigate();
   return (
     <Button
-      className='flex h-32 flex-row  rounded-sm border border-black p-0 mb-2'
+      className='flex h-32 flex-row w-full rounded-sm border border-black p-0 mb-2'
       variant='ghost'
       key={recipe._id}
       onClick={() => navigate(recipe._id)}>
-      <div className='h-full w-full flex-shrink flex-grow-[2] basis-0'>
+      <div className='h-full w-full aspect-square'>
         {recipe.image ? (
           <div className='h-full overflow-hidden'>
             <img
@@ -31,14 +31,14 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
           </div>
         )}
       </div>
-      <div className='flex h-full  flex-shrink flex-grow-[3] basis-0 flex-col p-2'>
-        <h1 className='line-clamp-1 text-left text-lg font-semibold'>{recipe.name}</h1>
+      <div className='flex h-full flex-col w-[calc(100vw-160px)] p-2'>
+        <h1 className='line-clamp-1 text-left text-lg font-semibold break-words text-ellipsis'>{recipe.name}</h1>
         <p className='line-clamp-3 text-left font-light text-xs text-stone-600'>{recipe.description}</p>
         <div className='flex-1' />
         <div className='w-full grid grid-cols-2'>
-          <div className='w-fit flex h-4 flex-row items-center text-sm italic'>
+          <div className='w-full flex h-4 flex-row items-center text-sm italic'>
             <Clock3 className='h-full aspect-square' />
-            {recipe.time ? (<span>{recipe.time} min</span>) : (<span>--</span>)}
+            {recipe.time ? (<span className='line-clamp-1 break-words'>{recipe.time} min</span>) : (<span>--</span>)}
           </div>
           <div className='w-fit flex h-4 flex-row items-center justify-center text-sm italic'>
             <Gauge className='h-full aspect-square' /> 
