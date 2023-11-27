@@ -13,7 +13,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
   const navigate = useNavigate();
   return (
     <Button
-      className='flex h-36 flex-row  rounded-sm border border-black p-0'
+      className='flex h-32 flex-row  rounded-sm border border-black p-0 mb-2'
       variant='ghost'
       key={recipe._id}
       onClick={() => navigate(recipe._id)}>
@@ -26,27 +26,25 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
             />
           </div>
         ) : (
-          <div className='flex h-full w-full items-center justify-center rounded'>
+          <div className='flex h-full w-full items-center justify-center rounded bg-stone-200'>
             <ImageOff className='h-10 w-10' />
           </div>
         )}
       </div>
       <div className='flex h-full  flex-shrink flex-grow-[3] basis-0 flex-col p-2'>
-        <h1 className='text-left text-lg font-semibold'>{recipe.name}</h1>
-        <p className='line-clamp-2 text-left font-light text-gray-600'>{recipe.description}</p>
+        <h1 className='line-clamp-1 text-left text-lg font-semibold'>{recipe.name}</h1>
+        <p className='line-clamp-3 text-left font-light text-xs text-stone-600'>{recipe.description}</p>
         <div className='flex-1' />
-        {recipe.time && (
-          <div className='flex h-6 flex-row items-center gap-4 pl-8'>
-            <Clock3 className='h-full' />
-            <span className='text-lg font-normal'>{recipe.time} minutes</span>
+        <div className='w-full grid grid-cols-2'>
+          <div className='w-fit flex h-4 flex-row items-center text-sm italic'>
+            <Clock3 className='h-full aspect-square' />
+            {recipe.time ? (<span>{recipe.time} min</span>) : (<span>--</span>)}
           </div>
-        )}
-        {recipe.difficulty && (
-          <div className='flex h-6 flex-row items-center gap-4 pl-8'>
-            <Gauge className='h-full' />
-            <span className='text-lg font-normal'>{recipe.difficulty}</span>
+          <div className='w-fit flex h-4 flex-row items-center justify-center text-sm italic'>
+            <Gauge className='h-full aspect-square' /> 
+            {recipe.difficulty ? (<span>{recipe.difficulty}</span>):(<span>--</span>)}
           </div>
-        )}
+        </div>
       </div>
     </Button>
   );

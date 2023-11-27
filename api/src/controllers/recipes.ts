@@ -142,7 +142,7 @@ export const getRecipes: RequestHandler = async (req, res) => {
       }
     }
     if (difficulty) {
-      valid = recipe.difficulty ? difficulty.toString().includes(recipe.difficulty) : false;
+      valid = recipe.difficulty ? valid && difficulty.toString().includes(recipe.difficulty) : false;
     }
     if (costLimit) {
       const numCost = parseFloat(costLimit.toString());
