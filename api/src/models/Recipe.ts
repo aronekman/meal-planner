@@ -15,6 +15,10 @@ const IngredientSchema = new Schema({
   protein: {
     type: Number,
     required: true
+  },
+  fat: {
+    type: Number,
+    required: true
   }
 });
 

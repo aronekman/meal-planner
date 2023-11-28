@@ -12,10 +12,15 @@ type RecipeDetailsProps = {
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   const { name, image, time, difficulty, description, ingredients, instructions, cost, created_by } = recipe;
   const nutrients = recipe.ingredients.reduce(
-    (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
+    (prev, curr) => (
+      { protein: prev.protein + curr.protein, 
+        calories: prev.calories + curr.calories,
+        fat: prev.fat + curr.fat }
+    ),
     {
       protein: 0,
-      calories: 0
+      calories: 0,
+      fat: 0
     }
   );
   return (
@@ -88,6 +93,10 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
           <div className="flex w-full justify-between">
             <div className="pl-2 font-alegreya text-base">Calories</div>
             <div className="w-[30%] pb-2 pl-4 font-alegreya text-base">{nutrients.calories.toFixed(2)} kcal</div>
+          </div>
+          <div className="flex w-full justify-between">
+            <div className="pl-2 font-alegreya text-base">Fat</div>
+            <div className="w-[30%] pb-2 pl-4 font-alegreya text-base">{nutrients.fat.toFixed(2)} g</div>
           </div>
         </div>
         <div className="flex w-full justify-between border-b-[1px] border-black">

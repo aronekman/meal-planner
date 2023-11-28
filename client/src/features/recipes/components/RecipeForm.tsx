@@ -50,10 +50,15 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
   });
   const [imageData, setImageData] = useState<{ name: string; url: string } | null>(null);
   const nutrients = data.ingredients.reduce(
-    (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
+    (prev, curr) => (
+      { protein: prev.protein + curr.protein, 
+        calories: prev.calories + curr.calories,
+        fat: prev.fat + curr.fat }
+    ),
     {
       protein: 0,
-      calories: 0
+      calories: 0,
+      fat: 0
     }
   );
   useEffect(() => {
@@ -243,7 +248,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
               <div className="flex flex-col">
                 <div className="flex justify-between">
                   <Label className="font-alegreya text-base" htmlFor="protein">
-                    Proteins
+                    Protein
                   </Label>
                   <div className="font-alegreya text-base" id="protein">
                     {nutrients.protein.toFixed(2)} g
@@ -255,6 +260,14 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                   </Label>
                   <div className="font-alegreya text-base" id="calories">
                     {nutrients.calories.toFixed(2)} kcal
+                  </div>
+                </div>
+                <div className="flex justify-between">
+                  <Label className="font-alegreya text-base" htmlFor="fat">
+                    Fat
+                  </Label>
+                  <div className="font-alegreya text-base" id="fat">
+                    {nutrients.fat.toFixed(2)} g
                   </div>
                 </div>
               </div>
@@ -282,6 +295,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                 placeholder="Write the instructions here..."
                 value={data.instructions}
                 onChange={({ target }) => updateData('instructions', target.value)}
+                rows={10}
               />
             </AccordionContent>
           </AccordionItem>

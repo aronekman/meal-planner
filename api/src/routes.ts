@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import { createUser, deleteUserToken, getNewAccessToken, handleLogin } from './controllers/authentication.js';
-import { getIngredient } from './controllers/Ingredient.js';
+import { getIngredient } from './controllers/ingredient.js';
 import { addMeal, deleteMeal, getPlan } from './controllers/plans.js';
 import {
   createRecipe,
