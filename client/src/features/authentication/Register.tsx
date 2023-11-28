@@ -61,7 +61,7 @@ const Register = () => {
                     <Input
                       placeholder="Username"
                       className="border-none bg-stone-100 font-alegreya 
-                      text-base text-primary placeholder:italic placeholder:text-primary"
+                      text-base placeholder:italic "
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +79,7 @@ const Register = () => {
                       type="password"
                       placeholder="Password"
                       className="mt-4 border-none bg-stone-100 
-                        font-alegreya text-base text-primary placeholder:italic placeholder:text-primary"
+                        font-alegreya text-base placeholder:italic "
                       {...field}
                     />
                   </FormControl>
@@ -97,7 +97,7 @@ const Register = () => {
                       type="password"
                       placeholder="Confirm password"
                       className="mt-4 border-none bg-stone-100  font-alegreya
-                        text-base text-primary first-line:border-none placeholder:italic placeholder:text-primary"
+                        text-base first-line:border-none placeholder:italic "
                       {...field}
                     />
                   </FormControl>

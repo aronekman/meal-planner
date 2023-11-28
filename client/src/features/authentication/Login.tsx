@@ -58,8 +58,7 @@ const Login = () => {
                   <FormControl>
                     <Input
                       placeholder="Username"
-                      className="border-none bg-stone-100 font-alegreya text-base 
-                        text-primary placeholder:italic placeholder:text-primary"
+                      className="border-none bg-stone-100 font-alegreya text-base placeholder:italic"
                       {...field}
                     />
                   </FormControl>
@@ -76,7 +75,7 @@ const Login = () => {
                       type="password"
                       placeholder="Password"
                       className="mt-4 border-none bg-stone-100 font-alegreya 
-                        text-base text-primary placeholder:italic placeholder:text-primary"
+                        text-base placeholder:italic "
                       {...field}
                     />
                   </FormControl>
