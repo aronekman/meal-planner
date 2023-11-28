@@ -39,7 +39,7 @@ const PlanList = () => {
             </div>
             <div className='w-[70%] h-[80%] line-clamp-1 flex flex-col pl-2 whitespace-nowrap font-alegreya'>
               <div className='text-ellipsis overflow-hidden text-sm'>{`${format(meal.time_slot, 'hh:mm')} - ${format(addHours(meal.time_slot, 1), 'hh:mm')}`}</div>
-              <div className='text-ellipsis overflow-hidden text-base'>{meal.recipe.name}</div>
+              <div className='max-w-[calc(50vw)] text-ellipsis overflow-hidden text-base'>{meal.recipe.name}</div>
             </div>
           </div>
           <Button className='h-4 w-4 rounded-full p-[1px] justify-self-end' onClick={() => handleDelete(meal._id)}>
