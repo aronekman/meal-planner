@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import mongoose from 'mongoose';
 
 import Recipe from '../models/Recipe.js';
 import User from '../models/User.js';
@@ -93,12 +94,19 @@ export const saveRecipe: RequestHandler = async (req, res) => {
   if (!recipe) {
     return res.status(404).json({ error: 'Recipe Id not found' });
   }
-  const user = req.user;
-  if (!user) {
-    return res.status(401).send('Unauthorized');
-  }
-  const updatedUser = await User.findByIdAndUpdate(user._id, { $push: { savedRecipes: recipe._id } }, { new: true });
-  if (!updatedUser) return res.sendStatus(404);
+
+  const session = await mongoose.startSession();
+  await session.withTransaction(async () => {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).send('Unauthorized');
+    }
+    const updatedUser = await User.findByIdAndUpdate(user._id, { $push: { saved_recipes: recipe._id } }, { new: true });
+    if (!updatedUser) return res.sendStatus(404);
+    recipe.save_count = recipe.save_count + 1;
+    await recipe.save();
+  });
+
   return res.status(200).send(recipe);
 };
 
@@ -111,12 +119,17 @@ export const unsaveRecipe: RequestHandler = async (req, res) => {
   if (!recipe) {
     return res.status(404).json({ error: 'Recipe Id not found' });
   }
-  const user = req.user;
-  if (!user) {
-    return res.status(401).send('Unauthorized');
-  }
-  const updatedUser = await User.findByIdAndUpdate(user._id, { $pull: { savedRecipes: recipe._id } }, { new: true });
-  if (!updatedUser) return res.sendStatus(404);
+  const session = await mongoose.startSession();
+  await session.withTransaction(async () => {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).send('Unauthorized');
+    }
+    const updatedUser = await User.findByIdAndUpdate(user._id, { $pull: { saved_recipes: recipe._id } }, { new: true });
+    if (!updatedUser) return res.sendStatus(404);
+    recipe.save_count = recipe.save_count - 1;
+    await recipe.save();
+  });
   return res.status(200).send(recipe);
 };
 
@@ -128,7 +141,7 @@ export const getRecipes: RequestHandler = async (req, res) => {
 
   let recipes = await Recipe
     .find({ published: true, created_by: { $nin: req.user?._id } })
-    .sort('-published_at')
+    .sort('-save_count -published_at')
     .populate('created_by', 'username');
   recipes = recipes.filter(recipe => {
     let valid = true;
