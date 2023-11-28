@@ -53,7 +53,7 @@ const AddRecipe = () => {
                 role='combobox'
                 aria-expanded={recipeOpen}
                 className='justify-between font-alegreya'>
-                <span className='text-ellipsis w-full overflow-hidden'>{recipeId ? options.find(({ _id }) => _id === recipeId)?.name : 'Select Recipe...'}</span>
+                <span className='text-ellipsis w-full overflow-hidden text-left'>{recipeId ? options.find(({ _id }) => _id === recipeId)?.name : 'Select Recipe...'}</span>
                 <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
               </Button>
             </PopoverTrigger>
@@ -69,9 +69,10 @@ const AddRecipe = () => {
                       onSelect={() => {
                         setRecipeId(recipe._id === recipeId ? null : recipe._id);
                         setRecipeOpen(false);
-                      }}>
+                      }}
+                      className="w-full flex">
                       <Check className={cn('mr-2 h-4 w-4', recipeId === recipe._id ? 'opacity-100' : 'opacity-0')} />
-                      {recipe.name}
+                      <span className="max-w-[90%] text-ellipsis overflow-hidden break-words">{recipe.name}</span>
                     </CommandItem>
                   ))}
                 </CommandGroup>
