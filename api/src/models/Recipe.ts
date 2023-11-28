@@ -53,6 +53,10 @@ const RecipeSchema = new Schema({
   },
   published_at: {
     type: Date
+  },
+  save_count: {
+    type: Number,
+    default: 0
   }
 });
 
