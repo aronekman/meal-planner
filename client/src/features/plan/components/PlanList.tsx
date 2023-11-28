@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { addHours, format } from 'date-fns';
 import { ImageOff, X } from 'lucide-react';
 
