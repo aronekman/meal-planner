@@ -59,7 +59,7 @@ const Login = () => {
                     <Input
                       placeholder="Username"
                       className="border-none bg-stone-100 font-alegreya text-base 
-                        text-orange-400 placeholder:italic placeholder:text-orange-300"
+                        text-primary placeholder:italic placeholder:text-primary"
                       {...field}
                     />
                   </FormControl>
@@ -75,22 +75,21 @@ const Login = () => {
                     <Input
                       type="password"
                       placeholder="Password"
-                      className="mt-3 border-none bg-stone-100 font-alegreya 
-                        text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      className="mt-4 border-none bg-stone-100 font-alegreya 
+                        text-base text-primary placeholder:italic placeholder:text-primary"
                       {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button className="mt-2 text-base" type="submit">
+            <Button className="text-base mt-4" type="submit">
               Login
             </Button>
           </form>
         </Form>
-
-        <Button asChild variant="link" className="my-2 h-fit font-alegreya text-orange-400">
-          <Link to="/register">No account? Sign Up!</Link>
+        <Button asChild variant="link" className="mt-2 mb-8 h-fit font-alegreya text-primary">
+          <Link to="/register">No account? Sign up!</Link>
         </Button>
       </div>
     </div>
