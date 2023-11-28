@@ -62,6 +62,11 @@ export const addMeal: RequestHandler = async (req, res) => {
         select: 'username'
       }
     });
+    plan.meals.sort((meal1, meal2) => {
+      if (!meal1.time_slot) return 1;
+      if (!meal2.time_slot) return -1;
+      return meal1.time_slot < meal2.time_slot ? -1 : meal1.time_slot > meal2.time_slot ? 1 : 0;
+    });
 
     return res.status(201).send(plan);
   } catch (e) {
@@ -86,6 +91,12 @@ export const deleteMeal: RequestHandler = async (req, res) => {
         path : 'created_by',
         select: 'username'
       }
+    });
+    
+    plan.meals.sort((meal1, meal2) => {
+      if (!meal1.time_slot) return 1;
+      if (!meal2.time_slot) return -1;
+      return meal1.time_slot < meal2.time_slot ? -1 : meal1.time_slot > meal2.time_slot ? 1 : 0;
     });
 
     return res.status(201).send(plan);
