@@ -19,7 +19,13 @@ export const getPlan: RequestHandler = async (req, res) => {
 
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
-    const plan = await Plan.findOne({ user: req.user?._id, date: queryDate }).populate('meals.recipe');
+    const plan = await Plan.findOne({ user: req.user?._id, date: queryDate }).populate({
+      path : 'meals.recipe',
+      populate : {
+        path : 'created_by',
+        select: 'username'
+      }
+    });
     if (!plan) {
       const newPlan = await Plan.create({
         user: req.user?._id,
@@ -49,7 +55,18 @@ export const addMeal: RequestHandler = async (req, res) => {
       { sort: { 'meals.time_slot': -1 }, new: true }
     );
     if (!plan) return res.status(404).send('Plan not found');
-    await plan.populate('meals.recipe');
+    await plan.populate({
+      path : 'meals.recipe',
+      populate : {
+        path : 'created_by',
+        select: 'username'
+      }
+    });
+    plan.meals.sort((meal1, meal2) => {
+      if (!meal1.time_slot) return 1;
+      if (!meal2.time_slot) return -1;
+      return meal1.time_slot < meal2.time_slot ? -1 : meal1.time_slot > meal2.time_slot ? 1 : 0;
+    });
 
     return res.status(201).send(plan);
   } catch (e) {
@@ -68,7 +85,19 @@ export const deleteMeal: RequestHandler = async (req, res) => {
       { sort: { 'meals.time_slot': -1 }, new: true }
     );
     if (!plan) return res.status(404).send('Plan not found');
-    await plan.populate('meals.recipe');
+    await plan.populate({
+      path : 'meals.recipe',
+      populate : {
+        path : 'created_by',
+        select: 'username'
+      }
+    });
+    
+    plan.meals.sort((meal1, meal2) => {
+      if (!meal1.time_slot) return 1;
+      if (!meal2.time_slot) return -1;
+      return meal1.time_slot < meal2.time_slot ? -1 : meal1.time_slot > meal2.time_slot ? 1 : 0;
+    });
 
     return res.status(201).send(plan);
   } catch (e) {

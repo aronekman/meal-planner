@@ -61,7 +61,7 @@ const Register = () => {
                     <Input
                       placeholder="Username"
                       className="border-none bg-stone-100 font-alegreya 
-                      text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      text-base placeholder:italic "
                       {...field}
                     />
                   </FormControl>
@@ -78,8 +78,8 @@ const Register = () => {
                     <Input
                       type="password"
                       placeholder="Password"
-                      className="mt-3 border-none bg-stone-100 
-                        font-alegreya text-base text-orange-400 placeholder:italic placeholder:text-orange-300"
+                      className="mt-4 border-none bg-stone-100 
+                        font-alegreya text-base placeholder:italic "
                       {...field}
                     />
                   </FormControl>
@@ -96,8 +96,8 @@ const Register = () => {
                     <Input
                       type="password"
                       placeholder="Confirm password"
-                      className="mt-3 border-none bg-stone-100  font-alegreya
-                        text-base text-orange-400 first-line:border-none placeholder:italic placeholder:text-orange-300"
+                      className="mt-4 border-none bg-stone-100  font-alegreya
+                        text-base first-line:border-none placeholder:italic "
                       {...field}
                     />
                   </FormControl>
@@ -105,12 +105,12 @@ const Register = () => {
                 </FormItem>
               )}
             />
-            <Button className="mt-3 text-base" type="submit">
+            <Button className="text-base mt-4" type="submit">
               Sign Up
             </Button>
           </form>
         </Form>
-        <Button asChild variant="link" className="my-2 h-fit text-center font-alegreya text-orange-400 ">
+        <Button asChild variant="link" className="mt-2 mb-8 h-fit text-center font-alegreya text-primary ">
           <Link to="/login">Already have an account? Login!</Link>
         </Button>
       </div>  

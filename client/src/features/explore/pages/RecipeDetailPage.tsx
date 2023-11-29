@@ -42,14 +42,12 @@ const RecipeDetailPage = () => {
     if (!recipe) return;
     await saveRecipe(recipe);
     toast({ title: `${recipe.name} Saved!` });
-    navigate('../');
   };
 
   const handleUnSave = async () => {
     if (!recipe) return;
     await unSaveRecipe(recipe);
     toast({ title: `${recipe.name} Unsaved!` });
-    navigate('../');
   };
 
   if (!recipe) return null;
@@ -58,11 +56,11 @@ const RecipeDetailPage = () => {
       <RecipeDetails recipe={recipe} />
       <div className="mb-6 flex justify-end p-4">
         {isSaved ? (
-          <Button variant="outline" onClick={handleUnSave}>
+          <Button className="w-20" variant="outline" onClick={handleUnSave}>
             Unsave
           </Button>
         ) : (
-          <Button onClick={handleSave}>Save</Button>
+          <Button className="w-20" onClick={handleSave}>Save</Button>
         )}
       </div>
     </div>

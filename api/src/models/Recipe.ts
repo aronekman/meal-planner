@@ -15,6 +15,10 @@ const IngredientSchema = new Schema({
   protein: {
     type: Number,
     required: true
+  },
+  fat: {
+    type: Number,
+    required: true
   }
 });
 
@@ -53,6 +57,10 @@ const RecipeSchema = new Schema({
   },
   published_at: {
     type: Date
+  },
+  save_count: {
+    type: Number,
+    default: 0
   }
 });
 

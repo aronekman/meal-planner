@@ -50,10 +50,15 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
   });
   const [imageData, setImageData] = useState<{ name: string; url: string } | null>(null);
   const nutrients = data.ingredients.reduce(
-    (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
+    (prev, curr) => (
+      { protein: prev.protein + curr.protein, 
+        calories: prev.calories + curr.calories,
+        fat: prev.fat + curr.fat }
+    ),
     {
       protein: 0,
-      calories: 0
+      calories: 0,
+      fat: 0
     }
   );
   useEffect(() => {
@@ -131,7 +136,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
       </Button>
       <div className="flex flex-col gap-2 p-4 pt-4 text-base ">
         <Input
-          className="mb-2 border-[1px] border-stone-600 font-alegreya text-base placeholder:italic"
+          className="mb-2 border-[1px] border-black font-alegreya text-base placeholder:italic"
           placeholder="Recipe Name"
           value={data.name ?? ''}
           onChange={({ target }) => updateData('name', target.value)}
@@ -141,7 +146,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
           <div className="flex-shrink flex-grow-[2] basis-0">
             <Textarea
               rows={6}
-              className="border-[1px] border-stone-600 font-alegreya text-base placeholder:italic"
+              className="border-[1px] border-black font-alegreya text-base placeholder:italic"
               value={data.description ?? ''}
               placeholder="Description"
               onChange={({ target }) => updateData('description', target.value)}
@@ -156,7 +161,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
 
               <Input
                 type="number"
-                className="border-[1px] border-stone-600 font-alegreya text-base"
+                className="border-[1px] border-black font-alegreya text-base"
                 value={data.time ?? ''}
                 onChange={({ target }) => updateData('time', parseInteger(target.value))}
               />
@@ -168,7 +173,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
               </span>
 
               <Select value={data.difficulty} onValueChange={value => updateData('difficulty', value)}>
-                <SelectTrigger className="border-[1px] border-stone-600 font-alegreya text-base">
+                <SelectTrigger className="border-[1px] border-black font-alegreya text-base">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="w-fit font-alegreya">
@@ -191,7 +196,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                       Amount
                     </Label>
                     <Input
-                      className="w-14 border-[1px] border-stone-600 font-alegreya text-base"
+                      className="w-14 border-[1px] border-black font-alegreya text-base"
                       id="amount"
                       onChange={({ target }) => setIngredientAmount(target.value)}
                       value={ingredientAmount}
@@ -202,7 +207,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                       Ingredient
                     </Label>
                     <Input
-                      className="border-[1px] border-stone-600 font-alegreya text-base placeholder:italic"
+                      className="border-[1px] border-black font-alegreya text-base placeholder:italic"
                       id="ingredient"
                       onChange={({ target }) => setIngredientQuery(target.value)}
                       value={ingredientQuery}
@@ -243,7 +248,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
               <div className="flex flex-col">
                 <div className="flex justify-between">
                   <Label className="font-alegreya text-base" htmlFor="protein">
-                    Proteins
+                    Protein
                   </Label>
                   <div className="font-alegreya text-base" id="protein">
                     {nutrients.protein.toFixed(2)} g
@@ -257,6 +262,14 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
                     {nutrients.calories.toFixed(2)} kcal
                   </div>
                 </div>
+                <div className="flex justify-between">
+                  <Label className="font-alegreya text-base" htmlFor="fat">
+                    Fat
+                  </Label>
+                  <div className="font-alegreya text-base" id="fat">
+                    {nutrients.fat.toFixed(2)} g
+                  </div>
+                </div>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -268,7 +281,7 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
             </Label>
             <Input
               id="cost-input"
-              className="mr-4 border-[1px] border-stone-600 font-alegreya text-base"
+              className="mr-4 border-[1px] border-black font-alegreya text-base"
               type="number"
               value={data.cost ?? ''}
               onChange={({ target }) => updateData('cost', parseDecimal(target.value, 2))}
@@ -278,10 +291,11 @@ const RecipeForm = ({ recipe, handleSubmit }: RecipeFormProps) => {
             <AccordionTrigger className="font-alegreya text-lg font-bold">Instructions</AccordionTrigger>
             <AccordionContent className="px-4 pt-1">
               <Textarea
-                className="border-[1px] border-stone-600 font-alegreya text-base placeholder:italic"
+                className="border-[1px] border-black font-alegreya text-base placeholder:italic"
                 placeholder="Write the instructions here..."
                 value={data.instructions}
                 onChange={({ target }) => updateData('instructions', target.value)}
+                rows={10}
               />
             </AccordionContent>
           </AccordionItem>

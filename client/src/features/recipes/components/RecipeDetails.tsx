@@ -10,17 +10,22 @@ type RecipeDetailsProps = {
 };
 
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
-  const { name, image, time, difficulty, description, ingredients, instructions, cost } = recipe;
+  const { name, image, time, difficulty, description, ingredients, instructions, cost, created_by } = recipe;
   const nutrients = recipe.ingredients.reduce(
-    (prev, curr) => ({ protein: prev.protein + curr.protein, calories: prev.calories + curr.calories }),
+    (prev, curr) => (
+      { protein: prev.protein + curr.protein, 
+        calories: prev.calories + curr.calories,
+        fat: prev.fat + curr.fat }
+    ),
     {
       protein: 0,
-      calories: 0
+      calories: 0,
+      fat: 0
     }
   );
   return (
     <div className="flex w-full flex-col">
-      <h1 className="px-10 py-5 text-center font-alegreya text-2xl font-bold capitalize">{name}</h1>
+      <h1 className="mx-10 py-5 text-center font-alegreya text-2xl font-bold capitalize break-words">{name}</h1>
       {image ? (
         <img
           className="aspect-video w-full bg-stone-100 object-contain object-top "
@@ -32,13 +37,15 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
         </div>
       )}
       <div className="flex flex-col gap-2 p-4">
+      <div className="text-center font-alegreya mb-2">Published by <span className="font-semibold">{created_by.username}</span></div>
+        
         <div className="flex w-full">
           <span
             className="w-[70%] border-r-[1px] border-black pr-3
             font-alegreya text-base">
             {description ? <div>{description}</div> : <div className="italic text-stone-600">Some description...</div>}
           </span>
-          <div className="grid h-fit w-[30%] gap-2 pl-3 pt-[2px]">
+          <div className="grid h-fit w-[30%] gap-2 pl-3 pt-[2px] font-alegreya">
             <div className="flex h-fit flex-row items-center overflow-visible text-sm font-medium italic">
               <Clock3 className="aspect-square h-4" />
               <span className="mx-2">{time ?? '--'} ms</span>
@@ -86,6 +93,10 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
           <div className="flex w-full justify-between">
             <div className="pl-2 font-alegreya text-base">Calories</div>
             <div className="w-[30%] pb-2 pl-4 font-alegreya text-base">{nutrients.calories.toFixed(2)} kcal</div>
+          </div>
+          <div className="flex w-full justify-between">
+            <div className="pl-2 font-alegreya text-base">Fat</div>
+            <div className="w-[30%] pb-2 pl-4 font-alegreya text-base">{nutrients.fat.toFixed(2)} g</div>
           </div>
         </div>
         <div className="flex w-full justify-between border-b-[1px] border-black">
