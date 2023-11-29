@@ -8,6 +8,7 @@ const apiClient = axios.create({
   baseURL: `${config.baseUrl}/api`
 });
 
+// Needs to wrap the Application so that it can access authContext
 const AxiosWrapper = ({ children }: { children: ReactNode }) => {
   const { logout } = useAuthContext();
   useEffect(() => {
@@ -18,11 +19,12 @@ const AxiosWrapper = ({ children }: { children: ReactNode }) => {
       }
       return config;
     };
-
+    // If a request fails, the request will be retryed with a refreshed access token
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const responseErrorHandler = async (error: any) => {
       if (!axios.isCancel(error) && axios.isAxiosError(error) && error.response?.status === 401) {
         if (!error.config?.headers || error.config.headers['No-Retry']) {
+          // The request has already been retryed once
           return Promise.reject(error);
         }
         try {

@@ -31,35 +31,37 @@ const AddRecipe = () => {
   const [timeSlot, setTimeSlot] = useState<Time | null>(null);
 
   const handleSubmit = async () => {
-    if (!timeSlot || !recipeId) return;
-    await addMeal(timeSlot, recipeId);
+    if (!recipeId) return;
+    await addMeal(recipeId, timeSlot ?? undefined);
   };
 
   return (
     <Dialog onOpenChange={open => !open && setRecipeId(null)}>
       <DialogTrigger asChild>
-        <Button className='self-end w-20 justify-self-end'>Add</Button>
+        <Button className="w-20 self-end justify-self-end">Add</Button>
       </DialogTrigger>
-      <DialogContent className='w-[80%] rounded-lg'>
-        <div className='w-full overflow-hidden flex flex-col gap-2 p-2'>
-          <Label htmlFor='recipe' className='flex items-center text-primary font-alegreya italic text-base'>
-            <ChefHat className='mr-2' /> Pick recipe
+      <DialogContent className="w-[80%] rounded-lg">
+        <div className="flex w-full flex-col gap-2 overflow-hidden p-2">
+          <Label htmlFor="recipe" className="flex items-center font-alegreya text-base italic text-primary">
+            <ChefHat className="mr-2" /> Pick recipe
           </Label>
           <Popover open={recipeOpen} onOpenChange={open => setRecipeOpen(open)}>
             <PopoverTrigger asChild>
               <Button
-                id='recipe'
-                variant='secondary'
-                role='combobox'
+                id="recipe"
+                variant="secondary"
+                role="combobox"
                 aria-expanded={recipeOpen}
-                className='justify-between font-alegreya'>
-                <span className='text-ellipsis w-full overflow-hidden text-left'>{recipeId ? options.find(({ _id }) => _id === recipeId)?.name : 'Select Recipe...'}</span>
-                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                className="justify-between font-alegreya">
+                <span className="w-full overflow-hidden text-ellipsis text-left">
+                  {recipeId ? options.find(({ _id }) => _id === recipeId)?.name : 'Select Recipe...'}
+                </span>
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className='p-0 font-alegreya'>
+            <PopoverContent className="p-0 font-alegreya">
               <Command>
-                <CommandInput placeholder='Search recipe...' />
+                <CommandInput placeholder="Search recipe..." />
                 <CommandEmpty>No recipe found.</CommandEmpty>
                 <CommandGroup>
                   {options.map(recipe => (
@@ -70,41 +72,41 @@ const AddRecipe = () => {
                         setRecipeId(recipe._id === recipeId ? null : recipe._id);
                         setRecipeOpen(false);
                       }}
-                      className="w-full flex">
+                      className="flex w-full">
                       <Check className={cn('mr-2 h-4 w-4', recipeId === recipe._id ? 'opacity-100' : 'opacity-0')} />
-                      <span className="max-w-[90%] text-ellipsis overflow-hidden break-words">{recipe.name}</span>
+                      <span className="max-w-[90%] overflow-hidden text-ellipsis break-words">{recipe.name}</span>
                     </CommandItem>
                   ))}
                 </CommandGroup>
               </Command>
             </PopoverContent>
           </Popover>
-          <Label htmlFor='time' className='mt-4 flex items-center text-primary font-alegreya italic text-base'>
-            <CalendarClock className='mr-2' /> Pick time
+          <Label htmlFor="time" className="mt-4 flex items-center font-alegreya text-base italic text-primary">
+            <CalendarClock className="mr-2" /> Pick time
           </Label>
           <Popover open={timeOpen} onOpenChange={open => setTimeOpen(open)}>
-            <PopoverAnchor className='absolute -top-16 left-1/2' />
+            <PopoverAnchor className="absolute -top-16 left-1/2" />
             <PopoverTrigger asChild>
               <Button
-                id='time'
-                variant='secondary'
-                role='combobox'
+                id="time"
+                variant="secondary"
+                role="combobox"
                 aria-expanded={recipeOpen}
-                className='justify-between font-alegreya'>
+                className="justify-between font-alegreya">
                 {timeSlot ? `${timeSlot.hour}:${pad(timeSlot.minute)}` : 'Select Time'}
-                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className='p-0'>
+            <PopoverContent className="p-0">
               <TimePicker time={timeSlot} setTime={setTimeSlot} close={() => setTimeOpen(false)} />
             </PopoverContent>
           </Popover>
-          <div className='flex justify-end gap-2 mt-4'>
-            <DialogClose className='w-20' asChild>
-              <Button variant='outline'>Cancel</Button>
+          <div className="mt-4 flex justify-end gap-2">
+            <DialogClose className="w-20" asChild>
+              <Button variant="outline">Cancel</Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button className='w-20' onClick={handleSubmit} disabled={!recipeId || !timeSlot}>
+              <Button className="w-20" onClick={handleSubmit} disabled={!recipeId}>
                 Add
               </Button>
             </DialogClose>

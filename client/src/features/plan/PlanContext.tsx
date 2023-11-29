@@ -11,7 +11,14 @@ import { Time } from './components/AddRecipe';
 const PlanSchema = z.object({
   _id: z.string(),
   meals: z.array(
-    z.object({ _id: z.string(), time_slot: z.string().transform(str => new Date(str)), recipe: RecipeSchema })
+    z.object({
+      _id: z.string(),
+      time_slot: z
+        .string()
+        .optional()
+        .transform(str => (str ? new Date(str) : undefined)),
+      recipe: RecipeSchema
+    })
   )
 });
 
@@ -22,7 +29,7 @@ type PlanState = {
   plan: Plan | null;
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
-  addMeal: (time: Time, recipeId: string) => Promise<void>;
+  addMeal: (recipeId: string, time?: Time) => Promise<void>;
   deleteMeal: (mealId: string) => Promise<void>;
 };
 
@@ -55,9 +62,10 @@ const PlanProvider = ({ children }: { children: ReactNode }) => {
     getData();
   }, [date]);
 
-  const addMeal = async (time: Time, recipeId: string) => {
+  const addMeal = async (recipeId: string, time?: Time) => {
     if (!plan) return;
-    const time_slot = setMinutes(setHours(date, time.hour), time.minute);
+    console.log(plan, recipeId, time);
+    const time_slot = time && setMinutes(setHours(date, time.hour), time.minute);
     const request = { meal: { time_slot, recipe: recipeId } };
     const { data } = await apiClient.post(`/meals?id=${plan._id}`, request);
     setPlan(PlanSchema.parse(data));

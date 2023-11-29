@@ -1,3 +1,4 @@
+// Needs to define all custom tailwind classes, because they cant be applyed dynamicly
 export const hourData = {
   0: { rotateRight: 'rotate-[0deg]', rotateLeft: '-rotate-[0deg]' },
   1: { rotateRight: 'rotate-[15deg]', rotateLeft: '-rotate-[15deg]' },

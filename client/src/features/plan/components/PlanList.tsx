@@ -35,9 +35,14 @@ const PlanList = () => {
                 </div>
               )}
             </div>
-            <div className='w-[70%] h-[80%] line-clamp-1 flex flex-col pl-2 whitespace-nowrap font-alegreya'>
-              <div className='text-ellipsis overflow-hidden text-sm'>{`${format(meal.time_slot, 'hh:mm')} - ${format(addHours(meal.time_slot, 1), 'hh:mm')}`}</div>
-              <div className='max-w-[calc(50vw)] text-ellipsis overflow-hidden text-base'>{meal.recipe.name}</div>
+            <div className="line-clamp-1 flex h-[80%] w-[70%] flex-col whitespace-nowrap pl-2 font-alegreya">
+              {meal.time_slot && (
+                <div className="overflow-hidden text-ellipsis text-sm">{`${format(meal.time_slot, 'hh:mm')} - ${format(
+                  addHours(meal.time_slot, 1),
+                  'hh:mm'
+                )}`}</div>
+              )}
+              <div className="max-w-[calc(50vw)] overflow-hidden text-ellipsis text-base">{meal.recipe.name}</div>
             </div>
           </div>
           <Button className="h-4 w-4 justify-self-end rounded-full p-[1px]" onClick={() => handleDelete(meal._id)}>

@@ -1,8 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import AppLayout from './common/AppLayout';
 import Login from './features/authentication/Login';
 import Register from './features/authentication/Register';
+import { ExploreProvider } from './features/explore/ExploreContext';
 import FindRecipes from './features/explore/pages/FindRecipes';
 import RecipeDetailPage from './features/explore/pages/RecipeDetailPage';
 import HomePage from './features/plan/HomePage';
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'explore',
+            element: (
+              <ExploreProvider>
+                <Outlet />
+              </ExploreProvider>
+            ),
             children: [
               { index: true, element: <FindRecipes /> },
               { path: ':id', element: <RecipeDetailPage /> }
