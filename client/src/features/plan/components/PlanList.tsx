@@ -36,11 +36,13 @@ const PlanList = () => {
               )}
             </div>
             <div className="line-clamp-1 flex h-[80%] w-[70%] flex-col whitespace-nowrap pl-2 font-alegreya">
-              {meal.time_slot && (
+              {meal.time_slot ? (
                 <div className="overflow-hidden text-ellipsis text-sm">{`${format(meal.time_slot, 'hh:mm')} - ${format(
                   addHours(meal.time_slot, 1),
                   'hh:mm'
                 )}`}</div>
+              ) : (
+                <div className="overflow-hidden text-ellipsis text-sm">--</div>
               )}
               <div className="max-w-[calc(50vw)] overflow-hidden text-ellipsis text-base">{meal.recipe.name}</div>
             </div>
