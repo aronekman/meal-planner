@@ -16,6 +16,8 @@ const RecipePage = () => {
   const navigate = useNavigate();
   const { setAppData } = useAppContext();
   const { loaded, drafts, published, saved, deleteRecipe, publishRecipe, unPublishRecipe, unSaveRecipe } = useRecipeContext();
+  
+  // find the recipe with ID from list of drafted (status 0), published (1), or saved (2) recipes
   let status = 0;
   let recipe = drafts.find(draft => draft._id === id)
   if (!recipe) {

@@ -95,6 +95,7 @@ export const saveRecipe: RequestHandler = async (req, res) => {
     return res.status(404).json({ error: 'Recipe Id not found' });
   }
 
+  // Mongoose session is used to create transaction comprising multiple effectful database operations
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
     const user = req.user;

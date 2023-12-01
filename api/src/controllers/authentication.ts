@@ -30,6 +30,7 @@ export const handleLogin: RequestHandler = async (req, res) => {
   return res.json({ accessToken, refreshToken });
 };
 
+// This controller is for silent logging in with refresh token
 export const getNewAccessToken: RequestHandler = async (req, res) => {
   const { refreshToken } = req.body;
   try {
@@ -43,6 +44,7 @@ export const getNewAccessToken: RequestHandler = async (req, res) => {
   }
 };
 
+// This controller disables refresh token, is used for logging out
 export const deleteUserToken: RequestHandler = async (req, res) => {
   const { refreshToken } = req.body;
   await UserToken.findOneAndDelete({ token: refreshToken });

@@ -17,6 +17,7 @@ export const getPlan: RequestHandler = async (req, res) => {
     return res.status(400).json({ error: 'Invalid date' });
   }
 
+  // Mongoose session is used to create transaction comprising multiple effectful database operations
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
     const plan = await Plan.findOne({ user: req.user?._id, date: queryDate }).populate({
@@ -26,6 +27,7 @@ export const getPlan: RequestHandler = async (req, res) => {
         select: 'username'
       }
     });
+    // If a plan for the queried date is yet to exist, create a new plan
     if (!plan) {
       const newPlan = await Plan.create({
         user: req.user?._id,

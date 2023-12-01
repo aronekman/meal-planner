@@ -36,7 +36,7 @@ const RecipeIcon = ({ recipe, onClick }: RecipeIconProps) => {
             </div>
           )}
         </div>
-        <h1 className='w-full text-center font-alegreya text-base line-clamp-1 text-ellipsis break-words'>{recipe.name}</h1>
+        <h1 className='w-full text-center font-alegreya text-base line-clamp-3 text-ellipsis break-words'>{recipe.name}</h1>
       </Button>
     </div>
   );
